@@ -11,7 +11,9 @@
     "url": "git+https://github.com/fergusfettes/docker-web-server.git"
   },
   "dependencies": {
-    "three": "^0.100.0"
+    "src": "^1.1.2",
+    "three": "^0.116.0",
+    "three-buffer-geometry-utils": "^1.0.0"
   },
   "keywords": [],
   "author": "",

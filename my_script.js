@@ -1,6 +1,6 @@
-var THREE = require("three")
-var camera, scene, renderer;
-var geometry, material, mesh;
+let THREE = require("three")
+let camera, scene, renderer;
+let geometry, material, mesh;
 if (module.hot) { module.hot.accept() }
 init(); animate();
 
