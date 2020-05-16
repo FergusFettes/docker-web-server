@@ -5,14 +5,15 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node main.js"
+    "start": "http-server prod"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/fergusfettes/docker-web-server.git"
   },
   "dependencies": {
-    "three": "^0.116.0"
+    "three": "^0.116.0",
+    "http-server": ""
   },
   "keywords": [],
   "author": "",
