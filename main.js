@@ -1,67 +1,15 @@
 import * as THREE from "three";
-function main() {
-  const canvas = document.querySelector('#c');
-  const renderer = new THREE.WebGLRenderer({canvas});
+import * as rnd from "./scripts/render.js";
+import * as mat from "./scripts/material.js";
+import { canvas, renderer, camera, scene } from "./scripts/background.js";
 
-  const fov = 40;
-  const aspect = 2;  // the canvas default
-  const near = 0.1;
-  const far = 1000;
-  const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-  camera.position.z = 120;
-
-  const scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xCCCCCC);
-
-  {
-    const color = 0xFFFFFF;
-    const intensity = 1;
-    const light = new THREE.DirectionalLight(color, intensity);
-    light.position.set(-1, 2, 4);
-    scene.add(light);
-  }
-  {
-    const color = 0xFFFFFF;
-    const intensity = 1;
-    const light = new THREE.DirectionalLight(color, intensity);
-    light.position.set(1, -2, -4);
-    scene.add(light);
-  }
+init();
+function init() {
 
   const objects = [];
+  const slow_objects = [];
   const spread = 15;
 
-  function addObject(x, y, obj) {
-    obj.position.x = x * spread;
-    obj.position.y = y * spread;
-
-    scene.add(obj);
-    objects.push(obj);
-  }
-
-  function createMaterial() {
-    const material = new THREE.MeshPhongMaterial({
-      side: THREE.DoubleSide,
-    });
-
-    const hue = Math.random();
-    const saturation = 1;
-    const luminance = .5;
-    material.color.setHSL(hue, saturation, luminance);
-
-    return material;
-  }
-
-  function addSolidGeometry(x, y, geometry) {
-    const mesh = new THREE.Mesh(geometry, createMaterial());
-    addObject(x, y, mesh);
-  }
-
-  function addLineGeometry(x, y, geometry) {
-    const material = new THREE.LineBasicMaterial({color: 0x000000});
-    const mesh = new THREE.LineSegments(geometry, material);
-    addObject(x, y, mesh);
-  }
 
   for (let i = 0; i < 100; i++) {
     const radius = (Math.sin(i * Math.PI) * 3.5) + 1.75;
@@ -70,7 +18,15 @@ function main() {
     const tubularSegments = 64;
     const p = 2;
     const q = 3;
-    addSolidGeometry((i % 15) - 7, (i / 5) - 10, new THREE.TorusKnotBufferGeometry(radius, tube, tubularSegments, radialSegments, p, q));
+    addSolidGeometry((i % 15) - 7, (i / 5) - 10, new THREE.TorusKnotBufferGeometry(radius, tube, tubularSegments, radialSegments, p, q), objects);
+  }
+
+  for (let i = 0; i < 32; i++) {
+    const radius = 15;
+    const canvas = renderer.domElement;
+    const w = canvas.clientWidth - (canvas.clientWidth / 5) ;
+    const h = canvas.clientHeight;
+    addSolidGeometry((i / w) * 0.8, (i / 3) - 2, new THREE.IcosahedronBufferGeometry(radius), slow_objects);
   }
 
   for (var i = 0; i < 4; i++) {
@@ -88,21 +44,47 @@ function main() {
     objects.push(points);
   }
 
-  function resizeRendererToDisplaySize(renderer) {
-    const canvas = renderer.domElement;
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    const needResize = canvas.width !== width || canvas.height !== height;
-    if (needResize) {
-      renderer.setSize(width, height, false);
-    }
-    return needResize;
+
+  function addSolidGeometry(x, y, geometry, collection) {
+    const mesh = new THREE.Mesh(geometry, mat.createMaterial());
+    addObject(x, y, mesh, collection);
   }
+
+  function addLineGeometry(x, y, geometry, collection) {
+    const material = new THREE.LineBasicMaterial({color: 0x000000});
+    const mesh = new THREE.LineSegments(geometry, material);
+    addObject(x, y, mesh, collection);
+  }
+
+  function addObject(x, y, obj, collection) {
+    obj.position.x = x * spread;
+    obj.position.y = y * spread;
+
+    scene.add(obj);
+    collection.push(obj);
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   function render(time) {
     time *= 0.001;
 
-    if (resizeRendererToDisplaySize(renderer)) {
+    if (rnd.resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
@@ -115,6 +97,13 @@ function main() {
       obj.rotation.y = rot;
     });
 
+    slow_objects.forEach((obj, ndx) => {
+      const speed = .1 + ndx * .1;
+      const rot = time * speed;
+      obj.rotation.x = rot;
+      obj.rotation.y = rot;
+    });
+
     renderer.render(scene, camera);
     requestAnimationFrame(render);
   }
@@ -122,4 +111,3 @@ function main() {
   requestAnimationFrame(render);
 }
 
-main();
