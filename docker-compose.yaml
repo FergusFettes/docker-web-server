@@ -69,3 +69,44 @@ services:
     ports:
       - 3306:3306
     restart: unless-stopped
+
+
+--- combined example from the website
+version: "2"
+services:
+  mariadb:
+    image: linuxserver/mariadb
+    container_name: mariadb
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - MYSQL_ROOT_PASSWORD=mariadbpassword
+      - TZ=Europe/London
+      - MYSQL_DATABASE=WP_database
+      - MYSQL_USER=WP_dbuser
+      - MYSQL_PASSWORD=WP_dbpassword
+    volumes:
+      - /home/aptalca/appdata/mariadb:/config
+    restart: unless-stopped
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=linuxserver-test.com
+      - SUBDOMAINS=wildcard
+      - VALIDATION=dns
+      - DNSPLUGIN=cloudflare
+    volumes:
+      - /home/aptalca/appdata/letsencrypt:/config
+    ports:
+      - 443:443
+      - 80:80
+    depends_on:
+      - mariadb
+    restart: unless-stopped
+
