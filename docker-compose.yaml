@@ -8,7 +8,7 @@ services:
     environment:
     - NODE_ENV=production
     volumes:
-    - ./www:/home/node/app
+    - "${PATH_TO_DIR}/www:/home/node/app"
     expose:
     - "8081"
     command: "npm start"
@@ -29,7 +29,7 @@ services:
       - EXTRA_DOMAINS= #optional
       - STAGING=false #optional
     volumes:
-      - /home/ffettes/:/config
+      - "${PATH_TO_DIR}/config:/config"
     ports:
       - 443:443
       - 80:80 #optional
