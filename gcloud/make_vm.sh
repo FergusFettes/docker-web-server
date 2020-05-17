@@ -3,9 +3,9 @@ gcloud beta compute instances create web-host \
   --machine-type=f1-micro \
   --subnet=default \
   --network-tier=PREMIUM \
-  --metadata=startup-script='#!/usr/bin/env
-apt update && apt upgrade
-apt install mosh git cmake zsh tmux
+  --metadata=startup-script='#!/usr/bin/env bash
+apt update -y && apt upgrade -y
+apt install -y mosh git cmake zsh tmux
 curl -fLo /root/.vimrc https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/minimal.vim
 curl -fLo /root/.zshrc https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/minimal.zsh
 curl -fLo /root/.tmux.conf https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/.tmux.conf
