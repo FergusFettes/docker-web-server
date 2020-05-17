@@ -9,8 +9,8 @@ apt install -y mosh git cmake zsh tmux
 curl -fLo /root/.vimrc https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/minimal.vim
 curl -fLo /root/.zshrc https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/minimal.zsh
 curl -fLo /root/.tmux.conf https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/.tmux.conf
-curl -fLo docker-install.sh https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/scripts/docker-install-ubuntu.sh
-sh docker-install.sh
+curl -fLo /root/docker-install.sh https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/scripts/docker-install-ubuntu.sh
+sh /root/docker-install.sh
 ' \
   --maintenance-policy=MIGRATE \
   --service-account=7476584885-compute@developer.gserviceaccount.com \
@@ -25,6 +25,12 @@ sh docker-install.sh
   --shielded-vtpm \
   --shielded-integrity-monitoring \
   --reservation-affinity=any
+
+# install eternal terminal
+# apt install -y software-properties-common
+# add ppa:jgmath2000/et
+# apt update -y
+# apt install -y et
 
 # commented out ofr now since these persiste even when i kill my main instance
 # gcloud compute firewall-rules create default-allow-http \
