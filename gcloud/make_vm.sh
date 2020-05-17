@@ -5,7 +5,13 @@ gcloud beta compute instances create web-host \
   --network-tier=PREMIUM \
   --metadata=startup-script='#!/usr/bin/env
 apt update && apt upgrade
-apt install mosh git cmake' \
+apt install mosh git cmake zsh tmux
+curl -fLo /root/.vimrc https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/minimal.vim
+curl -fLo /root/.zshrc https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/minimal.zsh
+curl -fLo /root/.tmux.conf https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/dockerfiles/config/.tmux.conf
+curl -fLo docker-install.sh https://raw.githubusercontent.com/FergusFettes/docker-apps/dev/scripts/docker-install-ubuntu.sh
+sh docker-install.sh
+' \
   --maintenance-policy=MIGRATE \
   --service-account=7476584885-compute@developer.gserviceaccount.com \
   --scopes=https://www.googleapis.com/auth/devstorage.read_only,https://www.googleapis.com/auth/logging.write,https://www.googleapis.com/auth/monitoring.write,https://www.googleapis.com/auth/servicecontrol,https://www.googleapis.com/auth/service.management.readonly,https://www.googleapis.com/auth/trace.append \
