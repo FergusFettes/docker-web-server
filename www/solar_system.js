@@ -1,4 +1,5 @@
-import * as THREE from "three";
+// import * as THREE from "three";
+import * as THREE from "./node_modules/three/build/three.min.js";
 import {GUI} from "./src/js/third_party/dat-gui.js";
 import * as rnd from "./scripts/render.js";
 import * as mat from "./scripts/material.js";
