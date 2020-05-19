@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { canvas, renderer, camera, scene, makeCamera } from "./scripts/background.js";
+import { loader, canvas, renderer, camera, scene, makeCamera } from "./scripts/background.js";
 
 function main() {
 
@@ -11,7 +11,11 @@ function main() {
   scene.add(tank);
 
   const bodyGeometry = new THREE.BoxBufferGeometry(carWidth, carHeight, carLength);
-  const bodyMaterial = new THREE.MeshPhongMaterial({color: 0x6688AA});
+  const bodyMaterial = new THREE.MeshPhongMaterial({
+    color: 0x6688AA,
+    map: loader.load('https://threejsfundamentals.org/threejs/resources/images/wall.jpg'),
+    // map: loader.load('content/kiki1.jpg'),
+  });
   const bodyMesh = new THREE.Mesh(bodyGeometry, bodyMaterial);
   bodyMesh.position.y = 1.4;
   bodyMesh.castShadow = true;
@@ -32,7 +36,10 @@ function main() {
       wheelRadius,     // bottom radius
       wheelThickness,  // height of cylinder
       wheelSegments);
-  const wheelMaterial = new THREE.MeshPhongMaterial({color: 0x888888});
+  const wheelMaterial = new THREE.MeshPhongMaterial({
+    color: 0x888888,
+    map: loader.load('content/reeks.jpg'),
+  });
   const wheelPositions = [
     [-carWidth / 2 - wheelThickness / 2, -carHeight / 2,  carLength / 3],
     [ carWidth / 2 + wheelThickness / 2, -carHeight / 2,  carLength / 3],
@@ -83,8 +90,12 @@ function main() {
   turretCamera.position.y = .75 * .2;
   turretMesh.add(turretCamera);
 
-  const targetGeometry = new THREE.SphereBufferGeometry(.5, 6, 3);
-  const targetMaterial = new THREE.MeshPhongMaterial({color: 0x00FF00, flatShading: true});
+  const targetGeometry = new THREE.BoxBufferGeometry(2, 2, 2);
+  const targetMaterial = new THREE.MeshPhongMaterial({
+    color: 0x00FF00,
+    flatShading: true,
+    map: loader.load('content/sope.jpg'),
+  });
   const targetMesh = new THREE.Mesh(targetGeometry, targetMaterial);
   const targetOrbit = new THREE.Object3D();
   const targetElevation = new THREE.Object3D();
