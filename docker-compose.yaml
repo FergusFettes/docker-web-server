@@ -1,18 +1,6 @@
 version: '3.8'
 services:
 
-  node:
-    image: node:12
-    user: "node"
-    working_dir: /home/node/app
-    environment:
-    - NODE_ENV=production
-    volumes:
-    - "${PATH_TO_DIR}/www:/home/node/app"
-    expose:
-    - "8080"
-    command: "npm start"
-
   letsencrypt:
     image: linuxserver/letsencrypt
     container_name: letsencrypt
@@ -36,5 +24,10 @@ services:
       - 80:80 #optional
     restart: unless-stopped
 
-  nginx:
-    image: nginx:latest
+  # nginx:
+  #   image: nginx:latest
+  #   volumes:
+  #     - "${PATH_TO_DIR}/nginx:/etc/nginx/conf.d"
+  #     - "${PATH_TO_DIR}/www:/www"
+  #   ports:
+  #     - 80:80
