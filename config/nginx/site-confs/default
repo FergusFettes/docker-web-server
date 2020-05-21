@@ -40,6 +40,14 @@ server {
 		include /etc/nginx/fastcgi_params;
 	}
 
+  location ~ \.(jpg|png) {
+    root /www/media;
+  }
+
+  location /hello {
+    return 200 'here are my website experiments, please enjoy at your loeasure';
+  }
+
 # sample reverse proxy config for password protected couchpotato running at IP 192.168.1.50 port 5050 with base url "cp"
 # notice this is within the same server block as the base
 # don't forget to generate the .htpasswd file as described on docker hub

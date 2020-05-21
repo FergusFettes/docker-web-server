@@ -18,7 +18,7 @@ services:
       - STAGING=false #optional
     volumes:
       - "${PATH_TO_DIR}/config:/config"
-      - "${PATH_TO_DIR}/content:/content"
+      - "${PATH_TO_DIR}/www:/www"
     ports:
       - 443:443
       - 80:80 #optional
