@@ -31,7 +31,7 @@ server {
 
 	location / {
     root /www;
-		index index.html
+		index index.html;
 	}
 
 	location ~ \.php$ {
