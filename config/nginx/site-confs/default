@@ -30,7 +30,8 @@ server {
 	client_max_body_size 0;
 
 	location / {
-		try_files $uri $uri/ /index.html /index.php?$args =404;
+    root /www;
+		index index.html
 	}
 
 	location ~ \.php$ {
