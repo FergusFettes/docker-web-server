@@ -29,11 +29,6 @@ server {
 
 	client_max_body_size 0;
 
-	location / {
-    root /www;
-		index index.html;
-	}
-
 	location ~ \.php$ {
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_pass 127.0.0.1:9000;
@@ -42,7 +37,7 @@ server {
 	}
 
   location ~ \.(jpg|png) {
-    root /www/media;
+    root /config/www/media;
   }
 
   location /hello {
