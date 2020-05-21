@@ -1,10 +1,10 @@
-import * as THREE from "three";
-export { canvas, renderer, camera, scene };
+// import * as THREE from "three";
+// export { canvas, renderer, camera, scene };
 
 let canvas, renderer, camera, scene;
 
 makeBackground();
-export function makeBackground() {
+function makeBackground() {
 
   canvas = document.querySelector('#c');
   renderer = new THREE.WebGLRenderer({canvas});

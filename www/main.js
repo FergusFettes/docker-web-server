@@ -1,7 +1,7 @@
-import * as THREE from "three";
-import * as rnd from "./scripts/render.js";
-import * as mat from "./scripts/material.js";
-import { canvas, renderer, camera, scene } from "./scripts/background.js";
+// import * as THREE from "three";
+// import * as rnd from "./scripts/render.js";
+// import * as mat from "./scripts/material.js";
+// import { canvas, renderer, camera, scene } from "./scripts/background.js";
 
 init();
 function init() {
@@ -92,7 +92,7 @@ function init() {
 
 
   function addSolidGeometry(x, y, geometry, collection) {
-    const mesh = new THREE.Mesh(geometry, mat.createMaterial());
+    const mesh = new THREE.Mesh(geometry, createMaterial());
     addObject(x, y, mesh, collection);
   }
 
@@ -130,7 +130,7 @@ function init() {
   function render(time) {
     time *= 0.001;
 
-    if (rnd.resizeRendererToDisplaySize(renderer)) {
+    if (resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
