@@ -1,4 +1,4 @@
-export function resizeRendererToDisplaySize(renderer) {
+function resizeRendererToDisplaySize(renderer) {
   const canvas = renderer.domElement;
   const width = canvas.clientWidth;
   const height = canvas.clientHeight;
@@ -8,4 +8,3 @@ export function resizeRendererToDisplaySize(renderer) {
   }
   return needResize;
 }
-
