@@ -1,18 +1,6 @@
 version: '3.8'
 services:
 
-  # node:
-  #   image: node:12
-  #   user: "node"
-  #   working_dir: /home/node/app
-  #   environment:
-  #   - NODE_ENV=production
-  #   volumes:
-  #   - "${PATH_TO_DIR}/www:/home/node/app"
-  #   expose:
-  #   - "8081"
-  #   command: "npm start"
-
   # letsencrypt:
   #   image: linuxserver/letsencrypt
   #   container_name: letsencrypt
