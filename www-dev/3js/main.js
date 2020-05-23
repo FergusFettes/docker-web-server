@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import * as rnd from "./src/render.js";
-import * as mat from "./src/material.js";
+import * as rnd from "src/render.js";
+import * as mat from "src/material.js";
 import { canvas, renderer, camera, scene } from "./src/background.js";
 
 init();
