@@ -26,6 +26,6 @@ services:
     image: nginx:latest
     volumes:
       - "${PATH_TO_DIR}/config/www:/www"
-      - "${PATH_TO_DIR}/nginx:/etc/nginx"
+      - "${PATH_TO_DIR}/nginx:/etc/nginx/conf.d"
     ports:
       - 80:80
