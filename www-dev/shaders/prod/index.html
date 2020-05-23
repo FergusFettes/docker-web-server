@@ -1,0 +1,15 @@
+<div id="container"></div><script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script><script id="vertexShader" type="x-shader/x-vertex">
+	uniform float time;
+	uniform vec2 resolution;
+	void main()	{
+		gl_Position = vec4( position, 1.0 );
+	}
+</script><script id="fragmentShader" type="x-shader/x-fragment">
+	uniform float time;
+	uniform vec2 resolution;
+	void main()	{
+		float x = mod(time + gl_FragCoord.x, 20.) < 10. ? 1. : 0.;
+		float y = mod(time + gl_FragCoord.y, 20.) < 10. ? 1. : 0.;
+		gl_FragColor = vec4(vec3(min(x, y)), 1.);
+	}
+</script><script src="http://localhost/shaders/main.js"></script>
