@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/fergusfettes/docker-web-server/issues"
   },
-  "homepage": "https://github.com/fergusfettes/docker-web-server#readme"
+  "homepage": "https://github.com/fergusfettes/docker-web-server#readme",
+  "devDependencies": {
+    "cssnano": "^4.1.10"
+  }
 }
