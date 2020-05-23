@@ -92,7 +92,7 @@ function init() {
 
 
   function addSolidGeometry(x, y, geometry, collection) {
-    const mesh = new THREE.Mesh(geometry, createMaterial());
+    const mesh = new THREE.Mesh(geometry, mat.createMaterial());
     addObject(x, y, mesh, collection);
   }
 
@@ -130,7 +130,7 @@ function init() {
   function render(time) {
     time *= 0.001;
 
-    if (resizeRendererToDisplaySize(renderer)) {
+    if (rnd.resizeRendererToDisplaySize(renderer)) {
       const canvas = renderer.domElement;
       camera.aspect = canvas.clientWidth / canvas.clientHeight;
       camera.updateProjectionMatrix();
