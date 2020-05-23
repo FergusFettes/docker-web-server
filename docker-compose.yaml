@@ -14,7 +14,7 @@ services:
       - SUBDOMAINS=1,2,3,4,5,6,7,8,9,
       - VALIDATION=
       - ONLY_SUBDOMAINS=false #optional
-      - STAGING=true #optional
+      - STAGING=false #optional
     volumes:
       - "${PATH_TO_DIR}/config:/config"
     ports:
@@ -22,10 +22,10 @@ services:
       - 80:80 #optional
     restart: unless-stopped
 
-  nginx:
+  nginx-dev:
     image: nginx:latest
     volumes:
-      - "${PATH_TO_DIR}/config/www:/www"
-      - "${PATH_TO_DIR}/nginx:/etc/nginx/conf.d"
+      - "${PATH_TO_DIR}/www-dev:/www"
+      - "${PATH_TO_DIR}/nginx-dev:/etc/nginx/conf.d"
     ports:
       - 80:80

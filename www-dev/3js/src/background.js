@@ -1,5 +1,5 @@
-// import * as THREE from "three";
-// export { canvas, renderer, camera, scene };
+import * as THREE from "three";
+export { canvas, renderer, camera, scene };
 
 let canvas, renderer, camera, scene;
 

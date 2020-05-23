@@ -1,5 +1,5 @@
-// import * as THREE from "three";
-// export { createMaterial };
+import * as THREE from "three";
+export { createMaterial };
 
 function createMaterial() {
   const material = new THREE.MeshPhongMaterial({
