@@ -22,10 +22,10 @@ services:
       - 80:80 #optional
     restart: unless-stopped
 
-  nginx:
+  nginx-dev:
     image: nginx:latest
     volumes:
-      - "${PATH_TO_DIR}/config/www:/www"
-      - "${PATH_TO_DIR}/nginx:/etc/nginx/conf.d"
+      - "${PATH_TO_DIR}/www-dev:/www"
+      - "${PATH_TO_DIR}/nginx-dev:/etc/nginx/conf.d"
     ports:
       - 80:80

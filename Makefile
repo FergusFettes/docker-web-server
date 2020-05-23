@@ -1,4 +1,4 @@
-DEV := nginx
+DEV := nginx-dev
 PROD := letsencrypt
 
 dev:
