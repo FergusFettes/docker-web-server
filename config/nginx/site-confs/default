@@ -48,6 +48,10 @@ server {
     return 200 'here are my website experiments, please enjoy at your leasure';
   }
 
+  location /shaders {
+    index index.html;
+  }
+
 # sample reverse proxy config for password protected couchpotato running at IP 192.168.1.50 port 5050 with base url "cp"
 # notice this is within the same server block as the base
 # don't forget to generate the .htpasswd file as described on docker hub
