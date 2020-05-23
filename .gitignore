@@ -1,7 +1,0 @@
-/config/www/.cache/
-/config/www/dist/
-/config/www/node_modules/
-/config/www/package-lock.json
-/config/www/content
-/config/www/media
-/config
