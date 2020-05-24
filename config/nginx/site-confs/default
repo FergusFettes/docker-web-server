@@ -37,7 +37,7 @@ server {
     index index.html;
   }
 
-  location /test1 {
+  location /test2 {
     index index.html;
   }
 
