@@ -2,7 +2,7 @@
   "name": "docker-web-server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -11,13 +11,8 @@
     "url": "git+https://github.com/fergusfettes/docker-web-server.git"
   },
   "dependencies": {
-    "files": "^2.0.0",
-    "restana": "^4.3.5",
-    "scripts": "^0.1.0",
-    "serve-static": "^1.14.1",
-    "src": "^1.1.2",
     "three": "^0.116.0",
-    "three-buffer-geometry-utils": "^1.0.0"
+    "src": "file:./3js/src/"
   },
   "keywords": [],
   "author": "",
@@ -27,10 +22,6 @@
   },
   "homepage": "https://github.com/fergusfettes/docker-web-server#readme",
   "devDependencies": {
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.1.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1"
+    "cssnano": "^4.1.10"
   }
 }

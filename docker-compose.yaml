@@ -1,42 +1,31 @@
 version: '3.8'
 services:
 
-  # node:
-  #   image: node:12
-  #   user: "node"
-  #   working_dir: /home/node/app
-  #   environment:
-  #   - NODE_ENV=production
-  #   volumes:
-  #   - /mnt/pi/app_data/schau/fergusfettes.github.io/experiments:/home/node/app
-  #   expose:
-  #   - "8081"
-  #   command: "npm start"
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    cap_add:
+      - NET_ADMIN
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - URL=experiments.schau-wien.at
+      - SUBDOMAINS=test1,test2,test3,test4,test5,fergus,sophie,enrique,maxie,kiki,paula
+      - VALIDATION=
+      - ONLY_SUBDOMAINS=false #optional
+      - STAGING=false #optional
+    volumes:
+      - "${PATH_TO_DIR}/config:/config"
+    ports:
+      - 443:443
+      - 80:80 #optional
+    restart: unless-stopped
 
-  # letsencrypt:
-  #   image: linuxserver/letsencrypt
-  #   container_name: letsencrypt
-  #   cap_add:
-  #     - NET_ADMIN
-  #   environment:
-  #     - PUID=1000
-  #     - PGID=1000
-  #     - TZ=Europe/London
-  #     - URL=expriments.schau-wien.at
-  #     - SUBDOMAINS=1,2,3,4,5,6,7,8,9,
-  #     - VALIDATION=http
-  #     - ONLY_SUBDOMAINS=false #optional
-  #     - EXTRA_DOMAINS= #optional
-  #     - STAGING=false #optional
-  #   volumes:
-  #     - /home/ffettes/:/config
-  #   ports:
-  #     - 443:443
-  #     - 80:80 #optional
-  #   restart: unless-stopped
-
-  nginx:
+  nginx-dev:
     image: nginx:latest
     volumes:
-      - /home/ffettes/docker-web-server/config:/config
-      - /home/ffettes/docker-web-server/www/content:/content
+      - "${PATH_TO_DIR}/www-dev:/www"
+      - "${PATH_TO_DIR}/nginx-dev:/etc/nginx/conf.d"
+    ports:
+      - 80:80

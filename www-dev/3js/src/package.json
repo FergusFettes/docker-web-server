@@ -1,0 +1,22 @@
+{
+  "name": "docker-web-server-source",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fergusfettes/docker-web-server.git"
+  },
+  "dependencies": {
+    "three": "^0.116.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fergusfettes/docker-web-server/issues"
+  },
+  "homepage": "https://github.com/fergusfettes/docker-web-server#readme"
+}
