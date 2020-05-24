@@ -4,8 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "http-server prod"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -13,7 +12,7 @@
   },
   "dependencies": {
     "three": "^0.116.0",
-    "http-server": ""
+    "src": "file:./3js/src/"
   },
   "keywords": [],
   "author": "",

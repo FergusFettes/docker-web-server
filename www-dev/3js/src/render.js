@@ -8,4 +8,3 @@ export function resizeRendererToDisplaySize(renderer) {
   }
   return needResize;
 }
-
