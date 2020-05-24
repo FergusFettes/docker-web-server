@@ -33,6 +33,18 @@ server {
     index index.html;
   }
 
+  location /test1 {
+    index index.html;
+  }
+
+  location /test1 {
+    index index.html;
+  }
+
+  location /fergus {
+    index index.html;
+  }
+
 	location ~ \.php$ {
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_pass 127.0.0.1:9000;
