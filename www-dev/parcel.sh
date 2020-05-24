@@ -45,7 +45,7 @@ fi
 
 if [ $index -eq 1 ]
 then
-  cat prod/index.html | sed -e "s^src=.*main.*\.js^src=\"http://localhost/$dir/main.js^" \
+  cat prod/index.html | sed -e "s^src=.*main.*\.js^src=\"http://experiments.schau-wien.at/$dir/main.js^" \
     > $base_dir/$dir/index.html
   echo built here and moved to $base_dir/$dir/index.html with a little sedding
 fi
