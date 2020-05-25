@@ -15,14 +15,15 @@ function createMaterial() {
 }
 
 const loadManager = new THREE.LoadingManager();
+
 const loader = new THREE.TextureLoader(loadManager);
-loader.crossOrigin = ''
+loader.crossOrigin = '';
 
 const materials = [
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.cloud.google.com/schau-wien-images/media/sopherfugs.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.cloud.google.com/schau-wien-images/media/kiki1.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.cloud.google.com/schau-wien-images/media/sopherfugs.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.cloud.google.com/schau-wien-images/media/kiki1.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.cloud.google.com/schau-wien-images/media/sopherfugs.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.cloud.google.com/schau-wien-images/media/kiki1.jpg')})
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
 ];

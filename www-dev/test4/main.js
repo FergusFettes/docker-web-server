@@ -3,6 +3,9 @@ import * as rnd from "src/render.js";
 import * as mat from "src/material.js";
 import { canvas, renderer, camera, scene } from "src/background.js";
 
+const loadingElem = document.querySelector('#loading');
+const progressBarElem = loadingElem.querySelector('.progressbar');
+
 init();
 function init() {
 
@@ -82,12 +85,17 @@ function init() {
     collection.push(obj);
   }
 
-  loadManager.onLoad = () => {
-    const geometry = new THREE.BoxBufferGeometry(1, 1, 1)
-    const cube = new THREE.Mesh(geometry, materials);
-    addObject(4, -2, cube, slow_objects)
+  mat.loadManager.onLoad = () => {
+    loadingElem.style.display = 'none';
+    const geometry = new THREE.BoxBufferGeometry(12, 12, 12)
+    const cube = new THREE.Mesh(geometry, mat.materials);
+    addObject(1, 1, cube, slow_objects)
   };
 
+  mat.loadManager.onProgress = (urlOfLastItemLoaded, itemsLoaded, itemsTotal) => {
+  const progress = itemsLoaded / itemsTotal;
+  progressBarElem.style.transform = `scaleX(${progress})`;
+  };
 
 
 
