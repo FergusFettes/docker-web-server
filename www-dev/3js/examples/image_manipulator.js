@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import {GUI} from 'src/third-party/dat-gui.js';
+import {GUI} from 'src/third_party/dat-gui.js';
 
 function main() {
   const canvas = document.querySelector('#c');
