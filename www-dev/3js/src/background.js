@@ -25,25 +25,6 @@ function makeBackground() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xCCCCCC);
 
-  // {
-  //   const color = 0xFFFFFF;
-  //   const intensity = 1;
-  //   const light = new THREE.DirectionalLight(color, intensity);
-  //   light.position.set(-1, 2, 4);
-  //   scene.add(light);
-  // }
-  // {
-  //   const color = 0xFFFFFF;
-  //   const intensity = 1;
-  //   const light = new THREE.DirectionalLight(color, intensity);
-  //   light.position.set(1, -2, -4);
-  //   scene.add(light);
-  // }
-
-  const color = 0xFFFFFF;
-  const intensity = 1;
-  const light = new THREE.AmbientLight(color, intensity);
-  scene.add(light);
 
   class ColorGUIHelper {
     constructor(object, prop) {
@@ -58,9 +39,26 @@ function makeBackground() {
     }
   }
 
+  const color = 0xFFFFFF;
+  const intensity = 1;
+  const light = new THREE.AmbientLight(color, intensity);
+  scene.add(light);
+
+  const skyColor = 0xB1E1FF;  // light blue
+  const groundColor = 0xB97A20;  // brownish orange
+  const intensity = 1;
+  light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+  scene.add(light);
+
+
   const gui = new GUI();
   gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
+  gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('skyColor');
+gui.addColor(new ColorGUIHelper(light, 'groundColor'), 'value').name('groundColor');
   gui.add(light, 'intensity', 0, 2, 0.01);
+
+
+
 }
 
 function makeCamera(fov = 40) {
