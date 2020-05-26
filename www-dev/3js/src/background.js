@@ -1,8 +1,9 @@
 import * as THREE from "three";
 import {OrbitControls} from 'src/js/OrbitControls.js';
+import {GUI} from 'src/third_party/dat-gui.js';
 export { canvas, renderer, camera, scene };
 
-let canvas, renderer, camera, scene;
+let canvas, renderer, camera, scene, controls;
 
 makeBackground();
 function makeBackground() {
@@ -39,18 +40,27 @@ function makeBackground() {
   //   scene.add(light);
   // }
 
-  {
-    const color = 0xFFFFFF;
-    const intensity = 1;
-    const light = new THREE.AmbientLight(color, intensity);
-    scene.add(light);
+  const color = 0xFFFFFF;
+  const intensity = 1;
+  const light = new THREE.AmbientLight(color, intensity);
+  scene.add(light);
+
+  class ColorGUIHelper {
+    constructor(object, prop) {
+      this.object = object;
+      this.prop = prop;
+    }
+    get value() {
+      return `#${this.object[this.prop].getHexString()}`;
+    }
+    set value(hexString) {
+      this.object[this.prop].set(hexString);
+    }
   }
 
-  {
-    const gui = new GUI();
-    gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
-    gui.add(light, 'intensity', 0, 2, 0.01);
-  }
+  const gui = new GUI();
+  gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
+  gui.add(light, 'intensity', 0, 2, 0.01);
 }
 
 function makeCamera(fov = 40) {
@@ -58,17 +68,4 @@ function makeCamera(fov = 40) {
   const zNear = 0.1;
   const zFar = 1000;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
-}
-
-class ColorGUIHelper {
-  constructor(object, prop) {
-    this.object = object;
-    this.prop = prop;
-  }
-  get value() {
-    return `#${this.object[this.prop].getHexString()}`;
-  }
-  set value(hexString) {
-    this.object[this.prop].set(hexString);
-  }
 }
