@@ -7,7 +7,6 @@ makeBackground();
 function makeBackground() {
 
   loader = new THREE.TextureLoader();
-  loader.crossOrigin = '';
   canvas = document.querySelector('#c');
   renderer = new THREE.WebGLRenderer({canvas});
 
