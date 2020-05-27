@@ -12,7 +12,7 @@ function makeBackground() {
   renderer = new THREE.WebGLRenderer({canvas});
 
   camera = makeCamera();
-  camera.position.set(1, 2, 150).multiplyScalar(3);
+  camera.position.set(10, 20, 20).multiplyScalar(3);
   camera.lookAt(0, 0, 0);
 
   controls = new OrbitControls(camera, canvas);
@@ -52,11 +52,10 @@ function makeBackground() {
   const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
   scene.add(light);
 
-  // const gui = new GUI();
-  // gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('skyColor');
-  // gui.addColor(new ColorGUIHelper(light, 'groundColor'), 'value').name('groundColor');
-  // gui.add(light, 'intensity', 0, 2, 0.01);
-
+  const gui = new GUI();
+  gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('skyColor');
+  gui.addColor(new ColorGUIHelper(light, 'groundColor'), 'value').name('groundColor');
+  gui.add(light, 'intensity', 0, 2, 0.01);
 
 }
 
