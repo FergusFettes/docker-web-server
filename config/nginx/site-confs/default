@@ -45,7 +45,19 @@ server {
     index index.html;
   }
 
-  location /test3 {
+  location /test4 {
+    index index.html;
+  }
+
+  location /test5 {
+    index index.html;
+  }
+
+  location /test6 {
+    index index.html;
+  }
+
+  location /test7 {
     index index.html;
   }
 
