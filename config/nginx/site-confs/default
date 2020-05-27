@@ -41,6 +41,14 @@ server {
     index index.html;
   }
 
+  location /test3 {
+    index index.html;
+  }
+
+  location /test3 {
+    index index.html;
+  }
+
   location /fergus {
     index index.html;
   }
