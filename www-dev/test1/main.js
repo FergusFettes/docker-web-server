@@ -63,14 +63,13 @@ function init() {
       objects);
   }
 
-  for (let i = 0; i < 32; i++) {
+  for (let i = 0; i < 40; i++) {
     const radius = 15;
     const canvas = renderer.domElement;
-    const w = canvas.clientWidth - (canvas.clientWidth / 5) ;
     const h = canvas.clientHeight;
     addSolidGeometry(
-      (i / w) * 0.8,
-      (i / 3) - 2,
+      0,
+      (i / 2) - 10,
       new THREE.IcosahedronBufferGeometry(radius),
       slow_objects);
   }

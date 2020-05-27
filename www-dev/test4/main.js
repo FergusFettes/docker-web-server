@@ -87,9 +87,9 @@ function init() {
 
   mat.loadManager.onLoad = () => {
     loadingElem.style.display = 'none';
-    const geometry = new THREE.BoxBufferGeometry(12, 12, 12)
+    const geometry = new THREE.BoxBufferGeometry(18, 18, 18)
     const cube = new THREE.Mesh(geometry, mat.materials);
-    addObject(1, 1, cube, slow_objects)
+    addObject(0, 0, cube, slow_objects)
   };
 
   mat.loadManager.onProgress = (urlOfLastItemLoaded, itemsLoaded, itemsTotal) => {

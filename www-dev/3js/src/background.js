@@ -12,7 +12,7 @@ function makeBackground() {
   renderer = new THREE.WebGLRenderer({canvas});
 
   camera = makeCamera();
-  camera.position.set(1, 2, 20).multiplyScalar(3);
+  camera.position.set(1, 2, 150).multiplyScalar(3);
   camera.lookAt(0, 0, 0);
 
   controls = new OrbitControls(camera, canvas);
@@ -39,24 +39,23 @@ function makeBackground() {
     }
   }
 
-  const color = 0xFFFFFF;
-  const intensity = 1;
-  const light = new THREE.AmbientLight(color, intensity);
-  scene.add(light);
+  {
+    const color = 0xFFFFFF;
+    const intensity = 1;
+    const light = new THREE.AmbientLight(color, intensity);
+    scene.add(light);
+  }
 
   const skyColor = 0xB1E1FF;  // light blue
   const groundColor = 0xB97A20;  // brownish orange
   const intensity = 1;
-  light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+  const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
   scene.add(light);
 
-
-  const gui = new GUI();
-  gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
-  gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('skyColor');
-gui.addColor(new ColorGUIHelper(light, 'groundColor'), 'value').name('groundColor');
-  gui.add(light, 'intensity', 0, 2, 0.01);
-
+  // const gui = new GUI();
+  // gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('skyColor');
+  // gui.addColor(new ColorGUIHelper(light, 'groundColor'), 'value').name('groundColor');
+  // gui.add(light, 'intensity', 0, 2, 0.01);
 
 
 }

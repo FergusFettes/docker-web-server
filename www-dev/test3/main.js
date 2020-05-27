@@ -174,12 +174,12 @@ function main() {
     }
 
     // move target
-    targetOrbit.rotation.y = time * .27;
+    targetOrbit.rotation.y = time * .027;
     targetBob.position.y = Math.sin(time * 2) * 4;
-    targetMesh.rotation.x = time * 7;
-    targetMesh.rotation.y = time * 13;
-    targetMaterial.emissive.setHSL(time * 10 % 1, 1, .25);
-    targetMaterial.color.setHSL(time * 10 % 1, 1, .25);
+    targetMesh.rotation.x = time * 3;
+    targetMesh.rotation.y = time * 3;
+    targetMaterial.emissive.setHSL(time * 10 % 1, 1, .35);
+    targetMaterial.color.setHSL(time * 10 % 1, 1, .35);
 
     // move tank
     const tankTime = time * .05;
