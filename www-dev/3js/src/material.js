@@ -1,5 +1,5 @@
 import * as THREE from "three";
-export { createMaterial };
+export { createMaterial, loader, loadManager, materials };
 
 function createMaterial() {
   const material = new THREE.MeshPhongMaterial({
@@ -13,3 +13,17 @@ function createMaterial() {
 
   return material;
 }
+
+const loadManager = new THREE.LoadingManager();
+
+const loader = new THREE.TextureLoader(loadManager);
+loader.crossOrigin = '';
+
+const materials = [
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
+];

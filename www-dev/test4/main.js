@@ -3,6 +3,9 @@ import * as rnd from "src/render.js";
 import * as mat from "src/material.js";
 import { canvas, renderer, camera, scene } from "src/background.js";
 
+const loadingElem = document.querySelector('#loading');
+const progressBarElem = loadingElem.querySelector('.progressbar');
+
 init();
 function init() {
 
@@ -63,33 +66,6 @@ function init() {
       objects);
   }
 
-  for (let i = 0; i < 40; i++) {
-    const radius = 15;
-    const canvas = renderer.domElement;
-    const h = canvas.clientHeight;
-    addSolidGeometry(
-      0,
-      (i / 2) - 10,
-      new THREE.IcosahedronBufferGeometry(radius),
-      slow_objects);
-  }
-
-  for (var i = 0; i < 4; i++) {
-    const radius = 150;
-    const widthSegments = 12;
-    const heightSegments = 8;
-    const geometry = new THREE.SphereBufferGeometry(radius, widthSegments, heightSegments);
-    const material = new THREE.PointsMaterial({
-        color: Math.random(),
-        size: 5,     // in world units
-    });
-    const points = new THREE.Points(geometry, material);
-    points.position.set(-1, -2, -4);
-    scene.add(points);
-    points_collection.push(points);
-  }
-
-
   function addSolidGeometry(x, y, geometry, collection) {
     const mesh = new THREE.Mesh(geometry, mat.createMaterial());
     addObject(x, y, mesh, collection);
@@ -109,20 +85,17 @@ function init() {
     collection.push(obj);
   }
 
+  mat.loadManager.onLoad = () => {
+    loadingElem.style.display = 'none';
+    const geometry = new THREE.BoxBufferGeometry(18, 18, 18)
+    const cube = new THREE.Mesh(geometry, mat.materials);
+    addObject(0, 0, cube, slow_objects)
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  mat.loadManager.onProgress = (urlOfLastItemLoaded, itemsLoaded, itemsTotal) => {
+  const progress = itemsLoaded / itemsTotal;
+  progressBarElem.style.transform = `scaleX(${progress})`;
+  };
 
 
 
