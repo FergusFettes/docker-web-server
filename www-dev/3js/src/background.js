@@ -38,8 +38,20 @@ function makeBackground() {
     }
   }
 
-  {
+  class DegRadHelper {
+    constructor(obj, prop) {
+      this.obj = obj;
+      this.prop = prop;
+    }
+    get value() {
+      return THREE.MathUtils.radToDeg(this.obj[this.prop]);
+    }
+    set value(v) {
+      this.obj[this.prop] = THREE.MathUtils.degToRad(v);
+    }
+  }
 
+  {
     // const color = 0xFFFFFF;
     // const intensity = 1;
     // const light = new THREE.DirectionalLight(color, intensity);
@@ -53,11 +65,11 @@ function makeBackground() {
 
     const color = 0xFFFFFF;
     const intensity = 1;
-    const light = new THREE.PointLight(color, intensity);
+    const light = new THREE.SpotLight(color, intensity);
     light.position.set(0, 10, 0);
     scene.add(light);
 
-    const helper = new THREE.PointLightHelper(light);
+    const helper = new THREE.SpotLightHelper(light);
     scene.add(helper);
 
     function updateLight() {
@@ -70,6 +82,8 @@ function makeBackground() {
     gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('culoure');
     gui.add(light, 'intensity', 0, 2, 0.01);
     gui.add(light, 'distance', 0, 40).onChange(updateLight);
+    gui.add(new DegRadHelper(light, 'angle'), 'value', 0, 90).name('angle').onChange(updateLight);
+    gui.add(light, 'penumbra', 0, 1, 0.01);
 
     makeXYZGUI(gui, light.position, 'position', updateLight);
     // makeXYZGUI(gui, light.target.position, 'target', updateLight);
