@@ -25,7 +25,6 @@ function makeBackground() {
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xCCCCCC);
 
-
   class ColorGUIHelper {
     constructor(object, prop) {
       this.object = object;
@@ -39,38 +38,41 @@ function makeBackground() {
     }
   }
 
-  function makeXYZGUI(gui, vector3, name, onChangeFn) {
-    const folder = gui.addFolder(name);
-    folder.add(vector3, 'x', -30, 30).onChange(onChangeFn);
-    folder.add(vector3, 'y', -30, 30).onChange(onChangeFn);
-    folder.add(vector3, 'z', -30, 30).onChange(onChangeFn);
-    folder.open();
-  }
-
   {
+
+    // const color = 0xFFFFFF;
+    // const intensity = 1;
+    // const light = new THREE.DirectionalLight(color, intensity);
+    // light.position.set(10, 10, 0);
+    // light.target.position.set(-5, 0, 0);
+    // scene.add(light);
+    // scene.add(light.target);
+
+    // const helper = new THREE.DirectionalLightHelper(light);
+    // scene.add(helper);
+
     const color = 0xFFFFFF;
     const intensity = 1;
-    const light = new THREE.DirectionalLight(color, intensity);
-    light.position.set(10, 10, 0);
-    light.target.position.set(-5, 0, 0);
+    const light = new THREE.PointLight(color, intensity);
+    light.position.set(0, 10, 0);
     scene.add(light);
-    scene.add(light.target);
 
-    const helper = new THREE.DirectionalLightHelper(light);
+    const helper = new THREE.PointLightHelper(light);
     scene.add(helper);
 
     function updateLight() {
-      light.target.updateMatrixWorld();
+      // light.target.updateMatrixWorld();
       helper.update();
     }
-    updateLight();
+    // updateLight();
 
     const gui = new GUI();
     gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('culoure');
     gui.add(light, 'intensity', 0, 2, 0.01);
+    gui.add(light, 'distance', 0, 40).onChange(updateLight);
 
     makeXYZGUI(gui, light.position, 'position', updateLight);
-    makeXYZGUI(gui, light.target.position, 'target', updateLight);
+    // makeXYZGUI(gui, light.target.position, 'target', updateLight);
   }
 
   // {
@@ -88,4 +90,12 @@ function makeCamera(fov = 40) {
   const zNear = 0.1;
   const zFar = 1000;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
+}
+
+function makeXYZGUI(gui, vector3, name, onChangeFn) {
+  const folder = gui.addFolder(name);
+  folder.add(vector3, 'x', -30, 30).onChange(onChangeFn);
+  folder.add(vector3, 'y', -30, 30).onChange(onChangeFn);
+  folder.add(vector3, 'z', -30, 30).onChange(onChangeFn);
+  folder.open();
 }
