@@ -10,6 +10,7 @@ function makeBackground() {
 
   canvas = document.querySelector('#c');
   renderer = new THREE.WebGLRenderer({canvas});
+  renderer.physicallyCorrectLights = true;
 
   camera = makeCamera();
   camera.position.set(10, 20, 20).multiplyScalar(3);
@@ -67,6 +68,9 @@ function makeBackground() {
     const intensity = 1;
     const light = new THREE.SpotLight(color, intensity);
     light.position.set(0, 10, 0);
+    light.power = 800;
+    light.decay = 2;
+    light.distance = Infinity;
     scene.add(light);
 
     const helper = new THREE.SpotLightHelper(light);
@@ -84,6 +88,8 @@ function makeBackground() {
     gui.add(light, 'distance', 0, 40).onChange(updateLight);
     gui.add(new DegRadHelper(light, 'angle'), 'value', 0, 90).name('angle').onChange(updateLight);
     gui.add(light, 'penumbra', 0, 1, 0.01);
+    gui.add(light, 'decay', 0, 4, 0.01);
+    gui.add(light, 'power', 0, 2000);
 
     makeXYZGUI(gui, light.position, 'position', updateLight);
     // makeXYZGUI(gui, light.target.position, 'target', updateLight);
