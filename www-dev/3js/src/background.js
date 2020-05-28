@@ -39,23 +39,47 @@ function makeBackground() {
     }
   }
 
+  function makeXYZGUI(gui, vector3, name, onChangeFn) {
+    const folder = gui.addFolder(name);
+    folder.add(vector3, 'x', -30, 30).onChange(onChangeFn);
+    folder.add(vector3, 'y', -30, 30).onChange(onChangeFn);
+    folder.add(vector3, 'z', -30, 30).onChange(onChangeFn);
+    folder.open();
+  }
+
   {
     const color = 0xFFFFFF;
     const intensity = 1;
-    const light = new THREE.AmbientLight(color, intensity);
+    const light = new THREE.DirectionalLight(color, intensity);
+    light.position.set(10, 10, 0);
+    light.target.position.set(-5, 0, 0);
     scene.add(light);
+    scene.add(light.target);
+
+    const helper = new THREE.DirectionalLightHelper(light);
+    scene.add(helper);
+
+    function updateLight() {
+      light.target.updateMatrixWorld();
+      helper.update();
+    }
+    updateLight();
+
+    const gui = new GUI();
+    gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('culoure');
+    gui.add(light, 'intensity', 0, 2, 0.01);
+
+    makeXYZGUI(gui, light.position, 'position', updateLight);
+    makeXYZGUI(gui, light.target.position, 'target', updateLight);
   }
 
-  const skyColor = 0xB1E1FF;  // light blue
-  const groundColor = 0xB97A20;  // brownish orange
-  const intensity = 1;
-  const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
-  scene.add(light);
-
-  const gui = new GUI();
-  gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('skyColor');
-  gui.addColor(new ColorGUIHelper(light, 'groundColor'), 'value').name('groundColor');
-  gui.add(light, 'intensity', 0, 2, 0.01);
+  // {
+  //   const skyColor = 0xB1E1FF;  // light blue
+  //   const groundColor = 0xB97A20;  // brownish orange
+  //   const intensity = 1;
+  //   const light = new THREE.HemisphereLight(skyColor, groundColor, intensity);
+  //   scene.add(light);
+  // }
 
 }
 
