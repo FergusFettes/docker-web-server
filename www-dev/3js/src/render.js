@@ -15,7 +15,7 @@ function render(time) {
 
   render_objects.forEach((obj, ndx) => {
     const speed = .1 + ndx * .1;
-    const rot = time * obj[1];
+    const rot = time * obj[1] * speed;
     obj[0].rotation.x = rot;
     obj[0].rotation.y = rot;
   });

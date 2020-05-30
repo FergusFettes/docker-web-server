@@ -43,7 +43,7 @@ function init() {
       (i % 15) - 7,
       (i / 5) - 10,
       new THREE.TorusKnotBufferGeometry(radius, tube, tubularSegments, radialSegments, p, q),
-      0.001);
+      1);
   }
 
 
