@@ -1,46 +1,24 @@
 import * as THREE from "three";
-import * as rnd from "src/render.js";
+import { canvas, scene } from "src/background.js";
 import * as mat from "src/material.js";
-import { canvas, renderer, camera, scene } from "src/background.js";
+import { klein } from "src/shapes.js";
 import { makeLights } from "src/lights.js";
+import { render, render_objects } from "src/render.js";
 
 const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
 
+const spread = 15;
+
 makeLights();
 init();
+requestAnimationFrame(render);
 function init() {
 
-  const objects = [];
-  const slow_objects = [];
-  const points_collection = [];
-  const spread = 15;
-
   for (let i = 0; i < 2; i++){
-    function klein(v, u, target) {
-      u *= Math.PI;
-      v *= 2 * Math.PI;
-      u = u * 2;
-
-      let x;
-      let z;
-
-      if (u < Math.PI) {
-          x = 3 * Math.cos(u) * (1 + Math.sin(u)) + (2 * (1 - Math.cos(u) / 2)) * Math.cos(u) * Math.cos(v);
-          z = -8 * Math.sin(u) - 2 * (1 - Math.cos(u) / 2) * Math.sin(u) * Math.cos(v);
-      } else {
-          x = 3 * Math.cos(u) * (1 + Math.sin(u)) + (2 * (1 - Math.cos(u) / 2)) * Math.cos(v + Math.PI);
-          z = -8 * Math.sin(u);
-      }
-
-      const y = -2 * (1 - Math.cos(u) / 2) * Math.sin(v);
-
-      target.set(x, y, z).multiplyScalar(3);
-    }
-
     const slices = 25;
     const stacks = 25;
-    addSolidGeometry((i * 6) - 3, 0, new THREE.ParametricBufferGeometry(klein, slices, stacks), slow_objects);
+    addSolidGeometry((i * 6) - 3, 0, new THREE.ParametricBufferGeometry(klein, slices, stacks), 0.1);
   }
 
   for (let i = 0; i < 5; i++) {
@@ -51,7 +29,7 @@ function init() {
       i - 2,
       i - 2,
       new THREE.BoxBufferGeometry(width, height, depth),
-      slow_objects);
+      0.1);
   }
 
   for (let i = 0; i < 100; i++) {
@@ -65,33 +43,15 @@ function init() {
       (i % 15) - 7,
       (i / 5) - 10,
       new THREE.TorusKnotBufferGeometry(radius, tube, tubularSegments, radialSegments, p, q),
-      objects);
+      0.001);
   }
 
-  function addSolidGeometry(x, y, geometry, collection) {
-    const mesh = new THREE.Mesh(geometry, mat.createMaterial());
-    addObject(x, y, mesh, collection);
-  }
-
-  function addLineGeometry(x, y, geometry, collection) {
-    const material = new THREE.LineBasicMaterial({color: 0x000000});
-    const mesh = new THREE.LineSegments(geometry, material);
-    addObject(x, y, mesh, collection);
-  }
-
-  function addObject(x, y, obj, collection) {
-    obj.position.x = x * spread;
-    obj.position.y = y * spread;
-
-    scene.add(obj);
-    collection.push(obj);
-  }
 
   mat.loadManager.onLoad = () => {
     loadingElem.style.display = 'none';
     const geometry = new THREE.BoxBufferGeometry(18, 18, 18)
     const cube = new THREE.Mesh(geometry, mat.materials);
-    addObject(0, 0, cube, slow_objects)
+    addObject(0, 0, cube, 0.1)
   };
 
   mat.loadManager.onProgress = (urlOfLastItemLoaded, itemsLoaded, itemsTotal) => {
@@ -99,42 +59,23 @@ function init() {
   progressBarElem.style.transform = `scaleX(${progress})`;
   };
 
-
-
-  function render(time) {
-    time *= 0.001;
-
-    if (rnd.resizeRendererToDisplaySize(renderer)) {
-      const canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    }
-
-    objects.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .0005;
-      const rot = Math.random() * speed;
-      obj.rotation.x = rot;
-      obj.rotation.y = rot;
-    });
-
-    slow_objects.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .1;
-      const rot = time * speed;
-      obj.rotation.x = rot;
-      obj.rotation.y = rot;
-    });
-
-    points_collection.forEach((obj, ndx) => {
-      const speed = .1 + ndx * .01;
-      const rot = time * speed;
-      obj.rotation.x = rot;
-      obj.rotation.y = rot;
-    });
-
-    renderer.render(scene, camera);
-    requestAnimationFrame(render);
-  }
-
-  requestAnimationFrame(render);
 }
 
+function addSolidGeometry(x, y, geometry, speed) {
+  const mesh = new THREE.Mesh(geometry, mat.createMaterial());
+  addObject(x, y, mesh, speed);
+}
+
+function addLineGeometry(x, y, geometry, speed) {
+  const material = new THREE.LineBasicMaterial({color: 0x000000});
+  const mesh = new THREE.LineSegments(geometry, material);
+  addObject(x, y, mesh, speed);
+}
+
+function addObject(x, y, obj, speed) {
+  obj.position.x = x * spread;
+  obj.position.y = y * spread;
+
+  scene.add(obj);
+  render_objects.push([obj, speed]);
+}
