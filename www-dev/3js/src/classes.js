@@ -1,5 +1,5 @@
 import * as THREE from "three";
-export { MinMaxGUIHelper };
+export { MinMaxGUIHelper, DegRadHelper, ColorGUIHelper };
 
 class MinMaxGUIHelper {
   constructor(obj, minProp, maxProp, minDif) {
