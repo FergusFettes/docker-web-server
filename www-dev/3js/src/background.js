@@ -1,8 +1,12 @@
 import * as THREE from "three";
+import {GUI} from 'src/third_party/dat-gui.js';
 import {OrbitControls} from 'src/js/OrbitControls.js';
+import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, renderer, camera, scene };
-let canvas, renderer, camera, scene, controls;
+export { canvas, renderer, camera, scene, gui };
+let canvas, renderer, camera, scene, controls, gui;
+
+gui = new GUI();
 
 makeBackground();
 function makeBackground() {
@@ -24,6 +28,17 @@ function makeBackground() {
 
   scene = new THREE.Scene();
   scene.background = new THREE.Color(0xCCCCCC);
+
+  const gui = new GUI();
+  gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
+  const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
+  gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
+  gui.add(minMaxGUIHelper, 'max', 0.1, 1000, 0.1).name('far').onChange(updateCamera);
+
+}
+
+function updateCamera() {
+  camera.updateProjectionMatrix();
 }
 
 function makeCamera(fov = 40) {
@@ -32,3 +47,4 @@ function makeCamera(fov = 40) {
   const zFar = 1000;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
 }
+

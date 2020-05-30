@@ -1,39 +1,10 @@
 import * as THREE from "three";
-import {GUI} from 'src/third_party/dat-gui.js';
-import { canvas, renderer, camera, scene } from "src/background.js";
+import { DegRadHelper, ColorGUIHelper } from "src/classes.js";
+import { canvas, renderer, camera, scene, gui } from "src/background.js";
 
-export { makeLights, gui };
-
-let gui;
+export { makeLights };
 
 function makeLights () {
-  class ColorGUIHelper {
-    constructor(object, prop) {
-      this.object = object;
-      this.prop = prop;
-    }
-    get value() {
-      return `#${this.object[this.prop].getHexString()}`;
-    }
-    set value(hexString) {
-      this.object[this.prop].set(hexString);
-    }
-  }
-
-  class DegRadHelper {
-    constructor(obj, prop) {
-      this.obj = obj;
-      this.prop = prop;
-    }
-    get value() {
-      return THREE.MathUtils.radToDeg(this.obj[this.prop]);
-    }
-    set value(v) {
-      this.obj[this.prop] = THREE.MathUtils.degToRad(v);
-    }
-  }
-
-  gui = new GUI();
 
   {
     // Ambient
