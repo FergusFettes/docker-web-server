@@ -4,7 +4,10 @@ import { PickHelper } from "src/classes.js";
 import { resizeRendererToDisplaySize } from "src/render.js";
 
 const pickPosition = {x: 0, y: 0};
-const cubeMap = {null: 'nothing selected'}
+const pickHelper = new PickHelper();
+const cubeMap = {null: 'nothing selected', undefined: 'selection gone'}
+
+const infoElem = document.querySelector('#info');
 
 init();
 function init() {
@@ -44,7 +47,6 @@ function init() {
     mapCube(cube);
   }
 
-  const pickHelper = new PickHelper();
   clearPickPosition();
 
   function render(time) {
@@ -70,6 +72,7 @@ function init() {
   window.addEventListener('mousemove', setPickPosition);
   window.addEventListener('mouseout', clearPickPosition);
   window.addEventListener('mouseleave', clearPickPosition);
+  window.addEventListener('mousedown', goToLink);
 
   window.addEventListener('touchstart', (event) => {
     // prevent the window from scrolling
@@ -134,5 +137,21 @@ function mapCube(cube) {
     cubeMap[cube] = "wo there!"
   } else {
     cubeMap[cube] = "https://experiments.schau-wien.at/test1/"
+  }
+}
+
+function goToLink() {
+  switch(typeof pickHelper.pickedObject) {
+    case "object":
+      console.log("still initializing i guess")
+      infoElem.textContent = ''
+      break;
+    case "undefined":
+      console.log("nothing to see here my old buddy")
+      infoElem.textContent = ''
+      break;
+    case "string":
+      infoElem.textContent = cubeMap[pickHelper.pickedObject]
+      break;
   }
 }
