@@ -20,10 +20,8 @@ const loader = new THREE.TextureLoader(loadManager);
 loader.crossOrigin = '';
 
 const materials = [
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sope2.jpg')}),
   new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
   new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
+  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg')}),
 ];

@@ -15,12 +15,12 @@ function makeBackground() {
   renderer = new THREE.WebGLRenderer({canvas});
   renderer.physicallyCorrectLights = true;
 
-  camera = makeCamera();
-  camera.position.set(10, 20, 20).multiplyScalar(3);
+  camera = makeCamera(80);
+  camera.position.set(0, 0, 50).multiplyScalar(2);
   camera.lookAt(0, 0, 0);
 
   controls = new OrbitControls(camera, canvas);
-  controls.target.set(0, 5, 0);
+  controls.target.set(0, 0, 0);
   controls.update();
 
   renderer.setClearColor(0xAAAAAA);

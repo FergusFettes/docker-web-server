@@ -18,5 +18,5 @@ function klein(v, u, target) {
 
   const y = -2 * (1 - Math.cos(u) / 2) * Math.sin(v);
 
-  target.set(x, y, z).multiplyScalar(3);
+  target.set(x, y, z).multiplyScalar(1);
 }
