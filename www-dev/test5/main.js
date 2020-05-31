@@ -84,8 +84,7 @@ function init() {
   window.addEventListener('touchmove', (event) => {
     setPickPosition(event.touches[0]);
   });
-  window.addEventListener('touchend', clearPickPosition);
-
+  window.addEventListener('touchend', goToLink);
 }
 
 function getCanvasRelativePosition(event) {
