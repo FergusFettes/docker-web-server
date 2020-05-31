@@ -61,7 +61,7 @@ function init() {
     cameraPole.rotation.y = time * .1;
 
     pickHelper.pick(pickPosition, scene, camera, time);
-    console.log(cubeMap[pickHelper.pickedObject])
+    // console.log(cubeMap[pickHelper.pickedObject])
 
     renderer.render(scene, camera);
 
@@ -72,7 +72,8 @@ function init() {
   window.addEventListener('mousemove', setPickPosition);
   window.addEventListener('mouseout', clearPickPosition);
   window.addEventListener('mouseleave', clearPickPosition);
-  window.addEventListener('mousedown', goToLink);
+  window.addEventListener('mousedown', showLink);
+  window.addEventListener('mouseup', goToLink);
 
   window.addEventListener('touchstart', (event) => {
     // prevent the window from scrolling
@@ -140,7 +141,7 @@ function mapCube(cube) {
   }
 }
 
-function goToLink() {
+function showLink() {
   switch(typeof pickHelper.pickedObject) {
     case "object":
       console.log("still initializing i guess")
@@ -152,6 +153,20 @@ function goToLink() {
       break;
     case "string":
       infoElem.textContent = cubeMap[pickHelper.pickedObject]
+      break;
+  }
+}
+function goToLink() {
+  switch(typeof pickHelper.pickedObject) {
+    case "object":
+      infoElem.textContent = ''
+      break;
+    case "undefined":
+      infoElem.textContent = ''
+      break;
+    case "string":
+      infoElem.textContent = ''
+      cubeMap[pickHelper.pickedObject].click()
       break;
   }
 }
