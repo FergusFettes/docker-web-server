@@ -72,9 +72,14 @@ function init() {
   window.addEventListener('mousemove', setPickPosition);
   window.addEventListener('mouseout', clearPickPosition);
   window.addEventListener('mouseleave', clearPickPosition);
-  window.addEventListener('mousedown', showLink);
-  window.addEventListener('mouseup', goToLink);
-
+  window.addEventListener('mousedown', (event) => {
+    event.preventDefault();
+    showLink();
+  }, {passive: false});
+  window.addEventListener('mouseup', (event) => {
+    event.preventDefault();
+    goToLink();
+  }, {passive: false});
   window.addEventListener('touchstart', (event) => {
     // prevent the window from scrolling
     event.preventDefault();
@@ -134,10 +139,17 @@ function setPickPosition(event) {
 }
 
 function mapCube(cube) {
-  if (Math.random() > 0.9) {
-    cubeMap[cube] = "https://experiments.schau-wien.at/test3/"
-  } else {
-    cubeMap[cube] = "https://experiments.schau-wien.at/test1/"
+  const choice = Math.floor(Math.random() * 3)
+  switch(choice) {
+    case 0:
+      cubeMap[cube] = "https://experiments.schau-wien.at/test1/"
+      break;
+    case 1:
+      cubeMap[cube] = "https://experiments.schau-wien.at/test2/"
+      break;
+    case 2:
+      cubeMap[cube] = "https://experiments.schau-wien.at/test3/"
+      break;
   }
 }
 
@@ -157,6 +169,7 @@ function showLink() {
       break;
   }
 }
+
 function goToLink() {
   switch(typeof pickHelper.pickedObject) {
     case "object":
