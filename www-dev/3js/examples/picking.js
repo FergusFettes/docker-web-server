@@ -4,6 +4,7 @@ import { PickHelper } from "src/classes.js";
 import { resizeRendererToDisplaySize } from "src/render.js";
 
 const pickPosition = {x: 0, y: 0};
+const cubeMap = {null: 'nothing selected'}
 
 init();
 function init() {
@@ -36,9 +37,11 @@ function init() {
     scene.add(cube);
 
     const point = getPoint();
-    cube.position.set(point["x"] * 30, point["y"] * 30, point["z"] * 30);
+    cube.position.set(point["x"] * 60, point["y"] * 60, point["z"] * 60);
     cube.rotation.set(rand(Math.PI), rand(Math.PI), 0);
     cube.scale.set(rand(3, 6), rand(3, 6), rand(3, 6));
+
+    mapCube(cube);
   }
 
   const pickHelper = new PickHelper();
@@ -56,18 +59,13 @@ function init() {
     cameraPole.rotation.y = time * .1;
 
     pickHelper.pick(pickPosition, scene, camera, time);
+    console.log(cubeMap[pickHelper.pickedObject])
 
     renderer.render(scene, camera);
 
     requestAnimationFrame(render);
   }
   requestAnimationFrame(render);
-
-  function setPickPosition(event) {
-    const pos = getCanvasRelativePosition(event);
-    pickPosition.x = (pos.x / canvas.width ) *  2 - 1;
-    pickPosition.y = (pos.y / canvas.height) * -2 + 1;  // note we flip Y
-  }
 
   window.addEventListener('mousemove', setPickPosition);
   window.addEventListener('mouseout', clearPickPosition);
@@ -78,14 +76,12 @@ function init() {
     event.preventDefault();
     setPickPosition(event.touches[0]);
   }, {passive: false});
-
   window.addEventListener('touchmove', (event) => {
     setPickPosition(event.touches[0]);
   });
-
   window.addEventListener('touchend', clearPickPosition);
-}
 
+}
 
 function getCanvasRelativePosition(event) {
   const rect = canvas.getBoundingClientRect();
@@ -127,3 +123,16 @@ function clearPickPosition() {
   pickPosition.y = -100000;
 }
 
+function setPickPosition(event) {
+  const pos = getCanvasRelativePosition(event);
+  pickPosition.x = (pos.x / canvas.width ) *  2 - 1;
+  pickPosition.y = (pos.y / canvas.height) * -2 + 1;  // note we flip Y
+}
+
+function mapCube(cube) {
+  if (Math.random() > 0.9) {
+    cubeMap[cube] = "wo there!"
+  } else {
+    cubeMap[cube] = "https://experiments.schau-wien.at/test1/"
+  }
+}
