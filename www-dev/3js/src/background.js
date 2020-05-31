@@ -44,7 +44,7 @@ function updateCamera() {
 function makeCamera(fov = 40) {
   const aspect = 2;  // the canvas default
   const zNear = 0.1;
-  const zFar = 1000;
+  const zFar = 300;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
 }
 

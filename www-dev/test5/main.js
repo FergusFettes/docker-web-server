@@ -18,7 +18,11 @@ function init() {
   {
     const slices = 25;
     const stacks = 25;
-    addSolidGeometry(5, 5, new THREE.ParametricBufferGeometry(klein, slices, stacks), 4);
+    addSolidGeometry(
+    5,
+    5,
+    new THREE.ParametricBufferGeometry(klein, slices, stacks),
+    4);
   }
 
   {
@@ -29,8 +33,8 @@ function init() {
     const p = 2;
     const q = 3;
     addSolidGeometry(
-      -5,
-      5,
+      canvas.clientHeight / 2,
+      canvas.clientWidth,
       new THREE.TorusKnotBufferGeometry(radius, tube, tubularSegments, radialSegments, p, q),
       1);
   }
