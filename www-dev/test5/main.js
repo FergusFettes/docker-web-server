@@ -74,6 +74,7 @@ function init() {
   window.addEventListener('mouseleave', clearPickPosition);
   window.addEventListener('mouseup', (event) => {
     event.preventDefault();
+    clearPickPosition();
     goToLink();
   }, {passive: false});
   window.addEventListener('touchstart', (event) => {
@@ -84,7 +85,10 @@ function init() {
   window.addEventListener('touchmove', (event) => {
     setPickPosition(event.touches[0]);
   });
-  window.addEventListener('touchend', goToLink);
+  window.addEventListener('touchend', (event) => {
+    clearPickPosition();
+    goToLink();
+  }, {passive: false});
 }
 
 
