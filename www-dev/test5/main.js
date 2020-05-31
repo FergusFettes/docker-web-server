@@ -87,6 +87,7 @@ function init() {
   window.addEventListener('touchend', goToLink);
 }
 
+
 function getCanvasRelativePosition(event) {
   const rect = canvas.getBoundingClientRect();
   return {
