@@ -19,9 +19,9 @@ function makeBackground() {
   camera.position.set(0, 0, 50).multiplyScalar(2);
   camera.lookAt(0, 0, 0);
 
-  controls = new OrbitControls(camera, canvas);
-  controls.target.set(0, 0, 0);
-  controls.update();
+  // controls = new OrbitControls(camera, canvas);
+  // controls.target.set(0, 0, 0);
+  // controls.update();
 
   renderer.setClearColor(0xAAAAAA);
   renderer.shadowMap.enabled = true;

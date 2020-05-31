@@ -5,7 +5,7 @@ import { resizeRendererToDisplaySize } from "src/render.js";
 
 const pickPosition = {x: 0, y: 0};
 const pickHelper = new PickHelper();
-const cubeMap = {null: 'nothing selected', undefined: 'selection gone'}
+const cubeMap = new WeakMap();
 
 const infoElem = document.querySelector('#info');
 
@@ -61,7 +61,7 @@ function init() {
     cameraPole.rotation.y = time * .1;
 
     pickHelper.pick(pickPosition, scene, camera, time);
-    // console.log(cubeMap[pickHelper.pickedObject])
+    showLink();
 
     renderer.render(scene, camera);
 
@@ -72,10 +72,6 @@ function init() {
   window.addEventListener('mousemove', setPickPosition);
   window.addEventListener('mouseout', clearPickPosition);
   window.addEventListener('mouseleave', clearPickPosition);
-  window.addEventListener('mousedown', (event) => {
-    event.preventDefault();
-    showLink();
-  }, {passive: false});
   window.addEventListener('mouseup', (event) => {
     event.preventDefault();
     goToLink();
@@ -139,51 +135,35 @@ function setPickPosition(event) {
 }
 
 function mapCube(cube) {
-  const choice = Math.floor(Math.random() * 3)
+  const choice = Math.floor(Math.random() * 4)
   switch(choice) {
     case 0:
-      cubeMap[cube] = "https://experiments.schau-wien.at/test1/"
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test1/")
       break;
     case 1:
-      cubeMap[cube] = "https://experiments.schau-wien.at/test2/"
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test2/")
       break;
     case 2:
-      cubeMap[cube] = "https://experiments.schau-wien.at/test3/"
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test3/")
+      break;
+    case 3:
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test4/")
       break;
   }
 }
 
 function showLink() {
-  switch(typeof pickHelper.pickedObject) {
-    case "object":
-      if (pickHelper.pickedObject === null) {
-        console.log("still initializing i guess")
-        infoElem.textContent = ''
-      } else {
-        infoElem.textContent = cubeMap[pickHelper.pickedObject]
-      }
-      break;
-    case "undefined":
-      console.log("nothing to see here my old buddy")
+  if (cubeMap.get(pickHelper.pickedObject)) {
+      infoElem.textContent = cubeMap.get(pickHelper.pickedObject);
+  } else {
       infoElem.textContent = ''
-      break;
   }
 }
 
 function goToLink() {
-  switch(typeof pickHelper.pickedObject) {
-    case "object":
-      if (pickHelper.pickedObject === null) {
-        console.log("shouldnt see this very often methinks")
-        infoElem.textContent = ''
-      } else {
-        const link = cubeMap[pickHelper.pickedObject]
-        window.open(link)
-      }
-      break;
-    case "undefined":
-      console.log("moved away?")
-      infoElem.textContent = ''
-      break;
+  if (cubeMap.get(pickHelper.pickedObject)) {
+      const link = cubeMap.get(pickHelper.pickedObject);
+      window.open(link);
   }
+  infoElem.textContent = ''
 }
