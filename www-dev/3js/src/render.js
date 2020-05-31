@@ -1,6 +1,6 @@
 import { renderer, camera, scene } from "src/background.js";
 
-export { render, render_objects };
+export { render, render_objects, resizeRendererToDisplaySize };
 
 const render_objects = [];
 

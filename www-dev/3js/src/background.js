@@ -19,9 +19,9 @@ function makeBackground() {
   camera.position.set(0, 0, 50).multiplyScalar(2);
   camera.lookAt(0, 0, 0);
 
-  controls = new OrbitControls(camera, canvas);
-  controls.target.set(0, 0, 0);
-  controls.update();
+  // controls = new OrbitControls(camera, canvas);
+  // controls.target.set(0, 0, 0);
+  // controls.update();
 
   renderer.setClearColor(0xAAAAAA);
   renderer.shadowMap.enabled = true;
@@ -44,7 +44,7 @@ function updateCamera() {
 function makeCamera(fov = 40) {
   const aspect = 2;  // the canvas default
   const zNear = 0.1;
-  const zFar = 1000;
+  const zFar = 300;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
 }
 
