@@ -37,6 +37,7 @@ parcel build -d prod --no-source-maps $file
 
 if [ $move -eq 1 ]
 then
+  mkdir $base_dir/$dir -p
   mv prod/main* $base_dir/$dir/main.js
   echo built here and moved to $base_dir/$dir/main.js
 else
