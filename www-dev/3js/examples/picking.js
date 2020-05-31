@@ -135,7 +135,7 @@ function setPickPosition(event) {
 
 function mapCube(cube) {
   if (Math.random() > 0.9) {
-    cubeMap[cube] = "wo there!"
+    cubeMap[cube] = "https://experiments.schau-wien.at/test3/"
   } else {
     cubeMap[cube] = "https://experiments.schau-wien.at/test1/"
   }
@@ -144,29 +144,33 @@ function mapCube(cube) {
 function showLink() {
   switch(typeof pickHelper.pickedObject) {
     case "object":
-      console.log("still initializing i guess")
-      infoElem.textContent = ''
+      if (pickHelper.pickedObject === null) {
+        console.log("still initializing i guess")
+        infoElem.textContent = ''
+      } else {
+        infoElem.textContent = cubeMap[pickHelper.pickedObject]
+      }
       break;
     case "undefined":
       console.log("nothing to see here my old buddy")
       infoElem.textContent = ''
-      break;
-    case "string":
-      infoElem.textContent = cubeMap[pickHelper.pickedObject]
       break;
   }
 }
 function goToLink() {
   switch(typeof pickHelper.pickedObject) {
     case "object":
-      infoElem.textContent = ''
+      if (pickHelper.pickedObject === null) {
+        console.log("shouldnt see this very often methinks")
+        infoElem.textContent = ''
+      } else {
+        const link = cubeMap[pickHelper.pickedObject]
+        window.open(link)
+      }
       break;
     case "undefined":
+      console.log("moved away?")
       infoElem.textContent = ''
-      break;
-    case "string":
-      infoElem.textContent = ''
-      cubeMap[pickHelper.pickedObject].click()
       break;
   }
 }
