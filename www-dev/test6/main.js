@@ -4,6 +4,7 @@ import * as mat from "src/material.js";
 import { klein } from "src/shapes.js";
 import { makeLights } from "src/lights.js";
 import { render, renderObjects } from "src/render.js";
+import { AxisGridHelper } from "src/classes.js";
 
 const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
@@ -31,13 +32,14 @@ function init() {
 }
 
 function randomOrbit(obj, speed, obj_speed) {
-  const randomOrbit = new THREE.Object3D();
-  renderObjects.push([randomOrbit, speed]);
+  const orbit = new THREE.Object3D();
+  scene.add(orbit);
+  renderObjects.push([orbit, speed]);
   const point = getPointOnSphere();
   obj.position.x = point['x'] * 50
   obj.position.y = point['y'] * 50
   obj.position.z = point['z'] * 50
-  randomOrbit.add(obj)
+  orbit.add(obj);
   renderObjects.push([obj, obj_speed]);
 }
 
@@ -69,4 +71,9 @@ function getPointOnSphere() {
       d = x*x + y*y + z*z;
   } while((d > 1.1) || (d < 0.9));
   return {x: x, y: y, z: z};
+}
+
+function makeAxisGrid(node, label, units) {
+  const helper = new AxisGridHelper(node, units);
+  gui.add(helper, 'visible').name(label);
 }
