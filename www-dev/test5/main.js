@@ -5,6 +5,7 @@ import { render, cubeMap, touchListeners, clearPickPosition } from "src/render.j
 
 init();
 touchListeners();
+clearPickPosition();
 function init() {
   const renderer = new THREE.WebGLRenderer({canvas});
   scene.background = new THREE.Color('white');

@@ -21,7 +21,7 @@ function init() {
   mat.loadManager.onLoad = () => {
     loadingElem.style.display = 'none';
     mat.materials.forEach((material, ndx) => {
-      const geometry = new THREE.BoxBufferGeometry(14, 14, 14);
+      const geometry = new THREE.BoxGeometry(14, 14, 14);
       const cube = new THREE.Mesh(geometry, material);
       randomOrbit(cube, 1, 0.5);
       mapCube(cube);
