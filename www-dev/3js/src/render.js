@@ -1,4 +1,5 @@
 import { renderer, canvas, camera, cameraPole, scene } from "src/background.js";
+import { imageMap } from "src/material.js";
 import { PickHelper } from "src/classes.js";
 
 export {
@@ -103,16 +104,16 @@ function getCanvasRelativePosition(event) {
 }
 
 function showLink() {
-  if (cubeMap.get(pickHelper.pickedObject)) {
-      infoElem.textContent = cubeMap.get(pickHelper.pickedObject);
+  if (imageMap.get(pickHelper.pickedObject)) {
+      infoElem.textContent = imageMap.get(pickHelper.pickedObject.material);
   } else {
       infoElem.textContent = ''
   }
 }
 
 function goToLink() {
-  if (cubeMap.get(pickHelper.pickedObject)) {
-      const link = cubeMap.get(pickHelper.pickedObject);
+  if (imageMap.get(pickHelper.pickedObject)) {
+      const link = imageMap.get(pickHelper.pickedObject.material);
       window.open(link);
   }
   infoElem.textContent = ''

@@ -20,14 +20,18 @@ loadManager = new THREE.LoadingManager();
 loader = new THREE.TextureLoader(loadManager);
 loader.crossOrigin = '';
 
-imageMap = {
-  "https://storage.googleapis.com/schau-wien-images/media/sope2.jpg": "https://experiments.schau-wien.at/sophie/"
-  "https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg": "https://experiments.schau-wien.at/kiki/"
-  "https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg": "https://experiments.schau-wien.at/fergus/"
-  "https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg": "https://experiments.schau-wien.at/enrique/"
+const imageDict = {
+  "https://storage.googleapis.com/schau-wien-images/media/sope2.jpg": "https://experiments.schau-wien.at/sophie/",
+  "https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg": "https://experiments.schau-wien.at/kiki/",
+  "https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg": "https://experiments.schau-wien.at/fergus/",
+  "https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg": "https://experiments.schau-wien.at/enrique/",
 }
 
-materials = []
-for (const [key, value] of Object.entries(imageMap)) {
-  materials.push(new THREE.MeshPhongMaterial({map: loader.load(key)}))
+imageMap = new WeakMap();
+
+materials = [];
+for (const [key, value] of Object.entries(imageDict)) {
+  const material = new THREE.MeshPhongMaterial({map: loader.load(key)});
+  materials.push(material);
+  imageMap.set(material, value);
 }
