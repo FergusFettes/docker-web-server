@@ -1,19 +1,26 @@
 import * as THREE from "three";
-import { canvas, scene } from "src/background.js";
+import { canvas, scene, touchListeners } from "src/background.js";
 import * as mat from "src/material.js";
 import { klein } from "src/shapes.js";
 import { makeLights } from "src/lights.js";
 import { render, renderObjects } from "src/render.js";
-import { AxisGridHelper } from "src/classes.js";
+import { AxisGridHelper, PickHelper } from "src/classes.js";
 
 const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
+
+const pickPosition = {x: 0, y: 0};
+const pickHelper = new PickHelper();
+
+const cubeMap = new WeakMap();
+const infoElem = document.querySelector('#info');
 
 const spread = 15;
 
 makeLights();
 init();
 requestAnimationFrame(render);
+touchListeners();
 function init() {
 
   mat.loadManager.onLoad = () => {

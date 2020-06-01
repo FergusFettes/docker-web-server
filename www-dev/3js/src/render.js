@@ -1,4 +1,4 @@
-import { renderer, camera, scene } from "src/background.js";
+import { renderer, camera, cameraPole, scene, pickPosition, pickHelper, showLink } from "src/background.js";
 
 export { render, renderObjects, resizeRendererToDisplaySize };
 
@@ -13,12 +13,19 @@ function render(time) {
     camera.updateProjectionMatrix();
   }
 
-  renderObjects.forEach((obj, ndx) => {
-    const speed = .1 + ndx * .1;
-    const rot = time * obj[1] * speed;
-    obj[0].rotation.x = rot;
-    obj[0].rotation.y = rot;
-  });
+  // renderObjects.forEach((obj, ndx) => {
+  //   const speed = .1 + ndx * .1;
+  //   const rot = time * obj[1] * speed;
+  //   obj[0].rotation.x = rot;
+  //   obj[0].rotation.y = rot;
+  // });
+
+  cameraPole.rotation.y = time * .1;
+
+  if (pickHelper) {
+    pickHelper.pick(pickPosition, scene, camera, time);
+    showLink();
+  }
 
   renderer.render(scene, camera);
   requestAnimationFrame(render);

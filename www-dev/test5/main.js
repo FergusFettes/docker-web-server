@@ -1,24 +1,12 @@
 import * as THREE from "three";
-import { canvas, scene, camera } from "src/background.js";
-import { PickHelper } from "src/classes.js";
-import { resizeRendererToDisplaySize } from "src/render.js";
+import { canvas, scene, camera, touchListeners, cubeMap } from "src/background.js";
+import { render } from "src/render.js";
 
-const pickPosition = {x: 0, y: 0};
-const pickHelper = new PickHelper();
-const cubeMap = new WeakMap();
-
-const infoElem = document.querySelector('#info');
 
 init();
 function init() {
   const renderer = new THREE.WebGLRenderer({canvas});
   scene.background = new THREE.Color('white');
-
-  // put the camera on a pole (parent it to an object)
-  // so we can spin the pole to move the camera around the scene
-  const cameraPole = new THREE.Object3D();
-  scene.add(cameraPole);
-  cameraPole.add(camera);
 
   {
     const color = 0xFFFFFF;
@@ -47,58 +35,9 @@ function init() {
     mapCube(cube);
   }
 
-  clearPickPosition();
-
-  function render(time) {
-    time *= 0.001;  // convert to seconds;
-
-    if (resizeRendererToDisplaySize(renderer)) {
-      const canvas = renderer.domElement;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    }
-
-    cameraPole.rotation.y = time * .1;
-
-    pickHelper.pick(pickPosition, scene, camera, time);
-    showLink();
-
-    renderer.render(scene, camera);
-
-    requestAnimationFrame(render);
-  }
   requestAnimationFrame(render);
-
-  window.addEventListener('mousemove', setPickPosition);
-  window.addEventListener('mouseout', clearPickPosition);
-  window.addEventListener('mouseleave', clearPickPosition);
-  window.addEventListener('mouseup', (event) => {
-    event.preventDefault();
-    clearPickPosition();
-    goToLink();
-  }, {passive: false});
-  window.addEventListener('touchstart', (event) => {
-    // prevent the window from scrolling
-    event.preventDefault();
-    setPickPosition(event.touches[0]);
-  }, {passive: false});
-  window.addEventListener('touchmove', (event) => {
-    setPickPosition(event.touches[0]);
-  });
-  window.addEventListener('touchend', (event) => {
-    clearPickPosition();
-    goToLink();
-  }, {passive: false});
 }
 
-
-function getCanvasRelativePosition(event) {
-  const rect = canvas.getBoundingClientRect();
-  return {
-    x: (event.clientX - rect.left) * canvas.width  / rect.width,
-    y: (event.clientY - rect.top ) * canvas.height / rect.height,
-  };
-}
 
 function rand(min, max) {
   if (max === undefined) {
@@ -123,21 +62,6 @@ function randomColor() {
   return `hsl(${rand(360) | 0}, ${rand(50, 100) | 0}%, 50%)`;
 }
 
-function clearPickPosition() {
-  // unlike the mouse which always has a position
-  // if the user stops touching the screen we want
-  // to stop picking. For now we just pick a value
-  // unlikely to pick something
-  pickPosition.x = -100000;
-  pickPosition.y = -100000;
-}
-
-function setPickPosition(event) {
-  const pos = getCanvasRelativePosition(event);
-  pickPosition.x = (pos.x / canvas.width ) *  2 - 1;
-  pickPosition.y = (pos.y / canvas.height) * -2 + 1;  // note we flip Y
-}
-
 function mapCube(cube) {
   const choice = Math.floor(Math.random() * 4)
   switch(choice) {
@@ -154,20 +78,4 @@ function mapCube(cube) {
       cubeMap.set(cube, "https://experiments.schau-wien.at/test4/")
       break;
   }
-}
-
-function showLink() {
-  if (cubeMap.get(pickHelper.pickedObject)) {
-      infoElem.textContent = cubeMap.get(pickHelper.pickedObject);
-  } else {
-      infoElem.textContent = ''
-  }
-}
-
-function goToLink() {
-  if (cubeMap.get(pickHelper.pickedObject)) {
-      const link = cubeMap.get(pickHelper.pickedObject);
-      window.open(link);
-  }
-  infoElem.textContent = ''
 }
