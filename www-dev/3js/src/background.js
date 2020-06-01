@@ -35,11 +35,11 @@ function makeBackground() {
   scene.add(cameraPole);
   cameraPole.add(camera);
 
-  const gui = new GUI();
-  gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
-  const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
-  gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
-  gui.add(minMaxGUIHelper, 'max', 0.1, 1000, 0.1).name('far').onChange(updateCamera);
+  // const gui = new GUI();
+  // gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
+  // const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
+  // gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
+  // gui.add(minMaxGUIHelper, 'max', 0.1, 1000, 0.1).name('far').onChange(updateCamera);
 
 }
 
