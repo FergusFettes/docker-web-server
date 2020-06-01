@@ -39,9 +39,9 @@ function randomOrbit(obj, speed, obj_speed) {
   scene.add(orbit);
   renderObjects.push([orbit, speed]);
   const point = getPointOnSphere();
-  obj.position.x = point['x'] * 70
-  obj.position.y = point['y'] * 70
-  obj.position.z = point['z'] * 70
+  obj.position.x = point['x'] * 90
+  obj.position.y = point['y'] * 90
+  obj.position.z = point['z'] * 90
   orbit.add(obj);
   renderObjects.push([obj, obj_speed]);
 }
