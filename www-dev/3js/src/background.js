@@ -12,8 +12,8 @@ makeBackground();
 function makeBackground() {
 
   canvas = document.querySelector('#c');
-  renderer = new THREE.WebGLRenderer({canvas});
-  renderer.physicallyCorrectLights = true;
+  renderer = new THREE.WebGLRenderer({canvas, alpha: true});
+  // renderer.physicallyCorrectLights = true;
 
   camera = makeCamera(80);
   camera.position.set(0, 0, 50).multiplyScalar(2);
