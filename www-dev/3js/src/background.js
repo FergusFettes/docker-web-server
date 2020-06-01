@@ -23,11 +23,11 @@ function makeBackground() {
   // controls.target.set(0, 0, 0);
   // controls.update();
 
-  renderer.setClearColor(0xAAAAAA);
+  // renderer.setClearColor(0xAAAAAA);
   renderer.shadowMap.enabled = true;
 
   scene = new THREE.Scene();
-  scene.background = new THREE.Color(0xCCCCCC);
+  // scene.background = new THREE.Color(0xCCCCCC);
 
   const gui = new GUI();
   gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
