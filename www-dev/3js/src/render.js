@@ -104,7 +104,7 @@ function getCanvasRelativePosition(event) {
 }
 
 function showLink() {
-  if (imageMap.get(pickHelper.pickedObject)) {
+  if (pickHelper.pickedObject) {
       infoElem.textContent = imageMap.get(pickHelper.pickedObject.material);
   } else {
       infoElem.textContent = ''
@@ -112,7 +112,7 @@ function showLink() {
 }
 
 function goToLink() {
-  if (imageMap.get(pickHelper.pickedObject)) {
+  if (pickHelper.pickedObject) {
       const link = imageMap.get(pickHelper.pickedObject.material);
       window.open(link);
   }
