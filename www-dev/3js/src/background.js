@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import {GUI} from 'src/third_party/dat-gui.js';
+// import {GUI} from 'src/third_party/dat-gui.js';
 import {OrbitControls} from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
