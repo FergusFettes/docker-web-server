@@ -6,7 +6,7 @@ import { MinMaxGUIHelper } from "src/classes.js";
 export { canvas, renderer, camera, cameraPole, scene, gui };
 let canvas, renderer, camera, cameraPole, scene, controls, gui;
 
-gui = new GUI();
+// gui = new GUI();
 
 makeBackground();
 function makeBackground() {
