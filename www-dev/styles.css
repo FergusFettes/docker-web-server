@@ -52,8 +52,16 @@ canvas { width: 100%; height: 100%; display: block; }
   z-index: 1;
 }
 .home-icon {
+  background: url('http://blog.schau-wien.at/wp-content/uploads/2020/04/logo.jpg') 0 0 / 100% auto;
   width: 100px;
   height: 100px;
   top: 1.5rem;
   left: 1.5rem;
 }
+.hide-text {
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  display: block;
+}
+
