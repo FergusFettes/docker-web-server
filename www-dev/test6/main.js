@@ -25,20 +25,6 @@ function init() {
     4);
   }
 
-  {
-    const radius = 2;
-    const tube = Math.random(1.5) * 2;
-    const radialSegments = 8;
-    const tubularSegments = 64;
-    const p = 2;
-    const q = 3;
-    addSolidGeometry(
-      canvas.clientHeight / 2,
-      canvas.clientWidth,
-      new THREE.TorusKnotBufferGeometry(radius, tube, tubularSegments, radialSegments, p, q),
-      1);
-  }
-
   mat.loadManager.onLoad = () => {
     loadingElem.style.display = 'none';
     mat.materials.forEach((material, ndx) => {
