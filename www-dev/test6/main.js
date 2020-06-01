@@ -9,8 +9,6 @@ const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
 
 const spread = 15;
-const centralPoint = new THREE.Object3D();
-addObject(0, 0, centralPoint, 0);
 
 makeLights();
 init();
@@ -22,9 +20,7 @@ function init() {
     mat.materials.forEach((material, ndx) => {
       const geometry = new THREE.BoxBufferGeometry(18, 18, 18);
       const cube = new THREE.Mesh(geometry, material);
-      const orbit = randomOrbit();
-      orbit.add(cube);
-      addObject(0, 0, cube, 0.1);
+      randomOrbit(cube, 1, 0.5);
     });
   };
 
@@ -34,15 +30,15 @@ function init() {
   };
 }
 
-function randomOrbit() {
+function randomOrbit(obj, speed, obj_speed) {
   const randomOrbit = new THREE.Object3D();
+  renderObjects.push([randomOrbit, speed]);
   const point = getPointOnSphere();
-  randomOrbit.position.x = point['x']
-  randomOrbit.position.y = point['y']
-  randomOrbit.position.z = point['z']
-  centralPoint.add(randomOrbit);
-  renderObjects.push([randomOrbit, 0.2]);
-  return randomOrbit
+  obj.position.x = point['x'] * 50
+  obj.position.y = point['y'] * 50
+  obj.position.z = point['z'] * 50
+  randomOrbit.add(obj)
+  renderObjects.push([obj, obj_speed]);
 }
 
 function addSolidGeometry(x, y, geometry, speed) {

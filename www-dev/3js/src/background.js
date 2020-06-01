@@ -16,7 +16,7 @@ function makeBackground() {
   // renderer.physicallyCorrectLights = true;
 
   camera = makeCamera(80);
-  camera.position.set(0, 0, 50).multiplyScalar(2);
+  camera.position.set(0, 0, 0).multiplyScalar(2);
   camera.lookAt(0, 0, 0);
 
   // controls = new OrbitControls(camera, canvas);
