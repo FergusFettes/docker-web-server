@@ -1,5 +1,7 @@
 import * as THREE from "three";
-export { createMaterial, loader, loadManager, materials };
+export { createMaterial, loader, loadManager, materials, imageMap };
+
+let imageMap, materials, loadManager, loader;
 
 function createMaterial() {
   const material = new THREE.MeshPhongMaterial({
@@ -14,14 +16,22 @@ function createMaterial() {
   return material;
 }
 
-const loadManager = new THREE.LoadingManager();
-
-const loader = new THREE.TextureLoader(loadManager);
+loadManager = new THREE.LoadingManager();
+loader = new THREE.TextureLoader(loadManager);
 loader.crossOrigin = '';
 
-const materials = [
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sope2.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg')}),
-  new THREE.MeshBasicMaterial({map: loader.load('https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg')}),
-];
+const imageDict = {
+  "https://storage.googleapis.com/schau-wien-images/media/sope2.jpg": "https://experiments.schau-wien.at/sophie/",
+  "https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg": "https://experiments.schau-wien.at/kiki/",
+  "https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg": "https://experiments.schau-wien.at/fergus/",
+  "https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg": "https://experiments.schau-wien.at/enrique/",
+}
+
+imageMap = new WeakMap();
+
+materials = [];
+for (const [key, value] of Object.entries(imageDict)) {
+  const material = new THREE.MeshPhongMaterial({map: loader.load(key)});
+  materials.push(material);
+  imageMap.set(material, value);
+}

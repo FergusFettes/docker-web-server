@@ -39,6 +39,7 @@ if [ $move -eq 1 ]
 then
   mkdir $base_dir/$dir -p
   mv prod/main* $base_dir/$dir/main.js
+  mv prod/styles* $base_dir/$dir/styles.css
   echo built here and moved to $base_dir/$dir/main.js
 else
   echo built here
@@ -46,7 +47,9 @@ fi
 
 if [ $index -eq 1 ]
 then
-  cat prod/index.html | sed -e "s^src=.*main.*\.js^src=\"https://experiments.schau-wien.at/$dir/main.js^" \
+  cat prod/index.html \
+    | sed -e "s^src=.*main.*\.js^src=\"https://experiments.schau-wien.at/$dir/main.js^" \
+    | sed -e "s^href=.*styles.*\.css^href=\"https://experiments.schau-wien.at/$dir/styles.css^" \
     > $base_dir/$dir/index.html
   echo built here and moved to $base_dir/$dir/index.html with a little sedding
 fi

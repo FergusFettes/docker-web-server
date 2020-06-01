@@ -13,8 +13,9 @@ function makeLights () {
     const light = new THREE.AmbientLight(color, intensity);
     scene.add(light);
 
-    gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
-    gui.add(light, 'intensity', 0, 2, 0.01);
+    // gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');
+    // gui.add(light, 'intensity', 0, 2, 0.01);
+
   }
 
    // {
