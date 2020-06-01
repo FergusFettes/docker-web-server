@@ -35,7 +35,7 @@ function init() {
   var container = document.getElementById( 'container' );
 
   camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 5000 );
-  camera.position.set( 100, 250, 750 );
+  camera.position.set( 300, 350, 750 );
 
   scene = new THREE.Scene();
 
