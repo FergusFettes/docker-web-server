@@ -65,6 +65,18 @@ server {
     index index.html;
   }
 
+  location /kiki {
+    index index.html;
+  }
+
+  location /sophie {
+    index index.html;
+  }
+
+  location /enrique {
+    index index.html;
+  }
+
 	location ~ \.php$ {
 		fastcgi_split_path_info ^(.+\.php)(/.+)$;
 		fastcgi_pass 127.0.0.1:9000;
