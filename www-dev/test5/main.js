@@ -1,9 +1,10 @@
 import * as THREE from "three";
-import { canvas, scene, camera, touchListeners, cubeMap } from "src/background.js";
-import { render } from "src/render.js";
+import { canvas, scene, camera } from "src/background.js";
+import { render, cubeMap, touchListeners, clearPickPosition } from "src/render.js";
 
 
 init();
+touchListeners();
 function init() {
   const renderer = new THREE.WebGLRenderer({canvas});
   scene.background = new THREE.Color('white');

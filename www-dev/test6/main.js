@@ -1,19 +1,13 @@
 import * as THREE from "three";
-import { canvas, scene, touchListeners } from "src/background.js";
+import { canvas, scene } from "src/background.js";
 import * as mat from "src/material.js";
 import { klein } from "src/shapes.js";
 import { makeLights } from "src/lights.js";
-import { render, renderObjects } from "src/render.js";
-import { AxisGridHelper, PickHelper } from "src/classes.js";
+import { render, renderObjects, cubeMap, touchListeners, clearPickPosition } from "src/render.js";
+import { AxisGridHelper } from "src/classes.js";
 
 const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
-
-const pickPosition = {x: 0, y: 0};
-const pickHelper = new PickHelper();
-
-const cubeMap = new WeakMap();
-const infoElem = document.querySelector('#info');
 
 const spread = 15;
 
@@ -21,14 +15,16 @@ makeLights();
 init();
 requestAnimationFrame(render);
 touchListeners();
+clearPickPosition();
 function init() {
 
   mat.loadManager.onLoad = () => {
     loadingElem.style.display = 'none';
     mat.materials.forEach((material, ndx) => {
-      const geometry = new THREE.BoxBufferGeometry(18, 18, 18);
+      const geometry = new THREE.BoxBufferGeometry(14, 14, 14);
       const cube = new THREE.Mesh(geometry, material);
       randomOrbit(cube, 1, 0.5);
+      mapCube(cube);
     });
   };
 
@@ -43,9 +39,9 @@ function randomOrbit(obj, speed, obj_speed) {
   scene.add(orbit);
   renderObjects.push([orbit, speed]);
   const point = getPointOnSphere();
-  obj.position.x = point['x'] * 50
-  obj.position.y = point['y'] * 50
-  obj.position.z = point['z'] * 50
+  obj.position.x = point['x'] * 70
+  obj.position.y = point['y'] * 70
+  obj.position.z = point['z'] * 70
   orbit.add(obj);
   renderObjects.push([obj, obj_speed]);
 }
@@ -83,4 +79,22 @@ function getPointOnSphere() {
 function makeAxisGrid(node, label, units) {
   const helper = new AxisGridHelper(node, units);
   gui.add(helper, 'visible').name(label);
+}
+
+function mapCube(cube) {
+  const choice = Math.floor(Math.random() * 4)
+  switch(choice) {
+    case 0:
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test1/")
+      break;
+    case 1:
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test2/")
+      break;
+    case 2:
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test3/")
+      break;
+    case 3:
+      cubeMap.set(cube, "https://experiments.schau-wien.at/test4/")
+      break;
+  }
 }
