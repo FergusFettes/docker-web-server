@@ -9,20 +9,22 @@ export {
   touchListeners,
   elementListeners,
   cubeMap,
-  clearPickPosition,
 };
-let renderObjects, cubeMap, rotationActive, infoElem, infoElemBottom, pickHelper, pickPosition;
+let renderObjects, chosenObject, cubeMap, rotationActive, rotationNotice, infoElem, infoElemBottom, pickHelper, pickPosition;
 
 renderObjects = [];
+chosenObject = [];
 cubeMap = new WeakMap();
-
 rotationActive = true;
+rotationNotice = "members on the go";
 
 infoElem = document.querySelector('#info');
 infoElemBottom = document.querySelector('#info-bottom');
+infoElemBottom.textContent = rotationNotice;
 
 pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
+clearPickPosition();
 
 function render(time) {
   time *= 0.001;
@@ -123,8 +125,14 @@ function elementListeners() {
 
 function startTransition(event) {
   console.log(event);
-  infoElemBottom.textContent = "clickity click";
-  rotationActive = false;
+  if (infoElemBottom.textContent === rotationNotice) {
+    infoElemBottom.textContent = "";
+    rotationActive = false;
+
+  } else {
+    infoElemBottom.textContent = rotationNotice;
+    rotationActive = true;
+  }
 }
 
 function clearPickPosition() {
@@ -156,8 +164,11 @@ function showLink() {
 
 function goToLink() {
   if (pickHelper.pickedObject) {
-      const link = imageMap.get(pickHelper.pickedObject.material);
-      window.open(link);
+      // const link = imageMap.get(pickHelper.pickedObject.material);
+      renderObjects = renderObjects.filter((x) => {return !(x[0] === pickHelper.pickedObject.parent)})
+      chosenOrbit.push(pickHelper.pickedObject.parent)
+      chosenOrbit = Set
+      // window.open(link);
   }
   infoElem.textContent = ''
 }

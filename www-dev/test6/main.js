@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { canvas, scene } from "src/background.js";
 import { materials, loadManager } from "src/material.js";
 import { makeLights } from "src/lights.js";
-import { render, renderObjects, touchListeners, elementListeners, clearPickPosition } from "src/render.js";
+import { render, renderObjects, touchListeners, elementListeners } from "src/render.js";
 
 const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
@@ -14,7 +14,6 @@ init();
 touchListeners();
 elementListeners();
 requestAnimationFrame(render);
-clearPickPosition();
 function init() {
 
   loadManager.onLoad = () => {
