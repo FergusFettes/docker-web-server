@@ -7,6 +7,7 @@ export {
   renderObjects,
   resizeRendererToDisplaySize,
   touchListeners,
+  elementListeners,
   cubeMap,
   clearPickPosition,
 };
@@ -78,6 +79,21 @@ function touchListeners() {
     clearPickPosition();
     goToLink();
   }, {passive: false});
+}
+
+function elementListeners() {
+  const el1 = document.querySelector(".other-icon")
+  el1.addEventListener("click", startTransition, false)
+}
+
+function startTransition(event) {
+  console.log(event);
+  bringForward();
+}
+
+function bringForward () {
+  infoElem.textContent = "bringing forward my friend"
+  console.log('deeper test')
 }
 
 function clearPickPosition() {
