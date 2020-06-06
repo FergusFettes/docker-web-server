@@ -10,10 +10,10 @@ export {
   elementListeners,
   cubeMap,
 };
-let renderObjects, chosenObject, cubeMap, rotationActive, rotationNotice, infoElem, infoElemBottom, pickHelper, pickPosition;
+let renderObjects, chosenOrbit, cubeMap, rotationActive, rotationNotice, infoElem, infoElemBottom, pickHelper, pickPosition;
 
 renderObjects = [];
-chosenObject = [];
+chosenOrbit = [];
 cubeMap = new WeakMap();
 rotationActive = true;
 rotationNotice = "members on the go";
@@ -167,7 +167,7 @@ function goToLink() {
       // const link = imageMap.get(pickHelper.pickedObject.material);
       renderObjects = renderObjects.filter((x) => {return !(x[0] === pickHelper.pickedObject.parent)})
       chosenOrbit.push(pickHelper.pickedObject.parent)
-      chosenOrbit = Set
+      chosenOrbit = Array.from(new Set(chosenOrbit))
       // window.open(link);
   }
   infoElem.textContent = ''
