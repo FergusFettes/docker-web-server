@@ -11,12 +11,12 @@ export {
   cubeMap,
   clearPickPosition,
 };
-let renderObjects, cubeMap, isSetActive, infoElem, infoElemBottom, pickHelper, pickPosition;
+let renderObjects, cubeMap, rotationActive, infoElem, infoElemBottom, pickHelper, pickPosition;
 
 renderObjects = [];
 cubeMap = new WeakMap();
 
-isSetActive = {renderObjects: true};
+rotationActive = true;
 
 infoElem = document.querySelector('#info');
 infoElemBottom = document.querySelector('#info-bottom');
@@ -48,7 +48,7 @@ function conditionalPickerResizer(time) {
 }
 
 function renderObjectSet(objectSet, time) {
-  if (isSetActive[objectSet]) {
+  if (rotationActive) {
     objectSet.forEach((obj, ndx) => {
       simpleRotate(obj, ndx, time);
     });
@@ -71,7 +71,7 @@ function simpleRotate(obj, ndx, time) {
 }
 
 function haltingRotate(obj, ndx, time) {
-  const absoluteRotation = obj[0].rotation % ( Math.PI * 2 )
+  const absoluteRotation = obj[0].rotation.x % ( Math.PI * 2 )
   if (absoluteRotation > 0.2) {
     const speed = .1 + ndx * .1;
     const rot = time * obj[1] * speed;
@@ -122,9 +122,9 @@ function elementListeners() {
 }
 
 function startTransition(event) {
-  console.log(event)
-  infoElemBottom.textContent = "clickity click"
-  isSetActive[renderObjects] = false;
+  console.log(event);
+  infoElemBottom.textContent = "clickity click";
+  rotationActive = false;
 }
 
 function clearPickPosition() {
