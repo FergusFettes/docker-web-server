@@ -31,6 +31,7 @@ function render(time) {
   conditionalPickerResizer(time);
 
   renderObjectSet(renderObjects, time);
+  bringObjectForward(chosenOrbit, time);
   // cameraPole.rotation.y = time * .1;
 
   renderer.render(scene, camera);
@@ -63,6 +64,10 @@ function renderObjectSet(objectSet, time) {
       }
     });
   }
+}
+
+function bringObjectForward(object, time) {
+
 }
 
 function simpleRotate(obj, ndx, time) {
@@ -100,7 +105,7 @@ function touchListeners() {
   window.addEventListener('mouseup', (event) => {
     event.preventDefault();
     clearPickPosition();
-    goToLink();
+    switchGroups(renderObjects, chosenOrbit);
   }, {passive: false});
   window.addEventListener('touchstart', (event) => {
     // prevent the window from scrolling
@@ -112,18 +117,18 @@ function touchListeners() {
   });
   window.addEventListener('touchend', (event) => {
     clearPickPosition();
-    goToLink();
+    switchGroups(renderObjects, chosenOrbit);
   }, {passive: false});
 }
 
 function elementListeners() {
   const el1 = document.querySelector(".other-icon")
-  el1.addEventListener("click", startTransition)
+  el1.addEventListener("click", stopWandering)
   const el2 = document.querySelector(".third-icon")
-  el2.addEventListener("click", startTransition)
+  el2.addEventListener("click", stopWandering)
 }
 
-function startTransition(event) {
+function stopWandering(event) {
   console.log(event);
   if (infoElemBottom.textContent === rotationNotice) {
     infoElemBottom.textContent = "";
@@ -154,6 +159,15 @@ function getCanvasRelativePosition(event) {
   };
 }
 
+function switchGroups(from, to) {
+  if (pickHelper.pickedObject) {
+      from = from.filter((x) => {return !(x[0] === pickHelper.pickedObject.parent)})
+      to.push(pickHelper.pickedObject.parent)
+      to = Array.from(new Set(to))
+  }
+  infoElem.textContent = ''
+}
+
 function showLink() {
   if (pickHelper.pickedObject) {
       infoElem.textContent = imageMap.get(pickHelper.pickedObject.material);
@@ -164,11 +178,8 @@ function showLink() {
 
 function goToLink() {
   if (pickHelper.pickedObject) {
-      // const link = imageMap.get(pickHelper.pickedObject.material);
-      renderObjects = renderObjects.filter((x) => {return !(x[0] === pickHelper.pickedObject.parent)})
-      chosenOrbit.push(pickHelper.pickedObject.parent)
-      chosenOrbit = Array.from(new Set(chosenOrbit))
-      // window.open(link);
+      const link = imageMap.get(pickHelper.pickedObject.material);
+      window.open(link);
   }
   infoElem.textContent = ''
 }

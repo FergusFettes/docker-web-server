@@ -19,7 +19,7 @@ function init() {
   loadManager.onLoad = () => {
     loadingElem.style.display = 'none';
     materials.forEach((material, ndx) => {
-      const geometry = new THREE.IcosahedronBufferGeometry(14);
+      const geometry = new THREE.BoxBufferGeometry(14, 14, 14);
       const cube = new THREE.Mesh(geometry, material);
       randomOrbit(cube, 1, 0.5, spread);
     });
