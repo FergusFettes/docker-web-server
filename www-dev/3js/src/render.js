@@ -1,4 +1,4 @@
-import { renderer, canvas, camera, cameraPole, scene } from "src/background.js";
+import { renderer, canvas, cameras, cameraPole, scene } from "src/background.js";
 import { imageMap } from "src/material.js";
 import { PickHelper } from "src/classes.js";
 
@@ -26,27 +26,35 @@ pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
 clearPickPosition();
 
+const camera = cameras[0]
+
 function render(time) {
   time *= 0.001;
-  conditionalPickerResizer(time);
+
+  infoElem.textContent = camera.desc;
+
+  conditionalPickerResizer(time, camera.cam);
 
   renderObjectSet(renderObjects, time);
   bringObjectForward(chosenOrbit, time);
   // cameraPole.rotation.y = time * .1;
 
-  renderer.render(scene, camera);
+  renderer.render(scene, camera.cam);
   requestAnimationFrame(render);
 }
 
-function conditionalPickerResizer(time) {
+function conditionalPickerResizer(time, camera) {
   if (pickHelper) {
     pickHelper.pick(pickPosition, scene, camera, time);
     showLink();
   }
   if (resizeRendererToDisplaySize(renderer)) {
     const canvas = renderer.domElement;
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.updateProjectionMatrix();
+    cameras.forEach((cameraInfo) => {
+      const camera = cameraInfo.cam;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    })
   }
 }
 

@@ -1,6 +1,6 @@
 import * as THREE from "three";
-import { canvas, scene } from "src/background.js";
-import { materials, loadManager } from "src/material.js";
+import { canvas, scene, makeCamera, cameras } from "src/background.js";
+import { materials, loadManager, imageMap } from "src/material.js";
 import { makeLights } from "src/lights.js";
 import { render, renderObjects, touchListeners, elementListeners } from "src/render.js";
 
@@ -22,6 +22,9 @@ function init() {
       const geometry = new THREE.BoxBufferGeometry(14, 14, 14);
       const cube = new THREE.Mesh(geometry, material);
       randomOrbit(cube, 1, 0.5, spread);
+      const camera = makeCamera(120)
+      cube.add(camera)
+      cameras.push({cam: camera, desc: `${imageMap.get(material)} camera`})
     });
   };
 

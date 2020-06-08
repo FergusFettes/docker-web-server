@@ -3,8 +3,8 @@ import * as THREE from "three";
 import {OrbitControls} from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, renderer, camera, cameraPole, scene, gui };
-let canvas, renderer, camera, cameraPole, scene, controls, gui;
+export { canvas, renderer, cameras, cameraPole, scene, gui, makeCamera };
+let canvas, renderer, cameras, cameraPole, scene, controls, gui;
 
 // gui = new GUI();
 
@@ -15,25 +15,29 @@ function makeBackground() {
   renderer = new THREE.WebGLRenderer({canvas, alpha: true});
   // renderer.physicallyCorrectLights = true;
 
-  camera = makeCamera(80);
-  camera.position.set(0, 0, 25).multiplyScalar(3);
-  camera.lookAt(0, 0, 0);
+  {
+    const camera = makeCamera(80);
+    camera.position.set(0, 0, 25).multiplyScalar(3);
+    camera.lookAt(0, 0, 0);
+    cameras = [];
+    cameras.push({cam: camera, desc: 'main camera'})
+  }
 
   // controls = new OrbitControls(camera, canvas);
   // controls.target.set(0, 0, 0);
   // controls.update();
 
   // renderer.setClearColor(0xAAAAAA);
-  renderer.shadowMap.enabled = true;
+  // renderer.shadowMap.enabled = true;
 
   scene = new THREE.Scene();
   // scene.background = new THREE.Color(0xCCCCCC);
 
-  // put the camera on a pole (parent it to an object)
-  // so we can spin the pole to move the camera around the scene
-  cameraPole = new THREE.Object3D();
-  scene.add(cameraPole);
-  cameraPole.add(camera);
+  // // put the camera on a pole (parent it to an object)
+  // // so we can spin the pole to move the camera around the scene
+  // cameraPole = new THREE.Object3D();
+  // scene.add(cameraPole);
+  // cameraPole.add(camera);
 
   // const gui = new GUI();
   // gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
@@ -43,9 +47,9 @@ function makeBackground() {
 
 }
 
-function updateCamera() {
-  camera.updateProjectionMatrix();
-}
+// function updateCamera() {
+//   camera.updateProjectionMatrix();
+// }
 
 function makeCamera(fov = 40) {
   const aspect = window.innerWidth / window.innerHeight;  // the canvas default
