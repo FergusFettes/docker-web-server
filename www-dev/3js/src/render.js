@@ -27,16 +27,15 @@ pickHelper = new PickHelper();
 clearPickPosition();
 
 const camera = cameras[0]
+infoElem.textContent = camera.desc;
 
 function render(time) {
   time *= 0.001;
 
-  infoElem.textContent = camera.desc;
 
   conditionalPickerResizer(time, camera.cam);
 
   renderObjectSet(renderObjects, time);
-  bringObjectForward(chosenOrbit, time);
   // cameraPole.rotation.y = time * .1;
 
   renderer.render(scene, camera.cam);
@@ -74,9 +73,6 @@ function renderObjectSet(objectSet, time) {
   }
 }
 
-function bringObjectForward(object, time) {
-
-}
 
 function simpleRotate(obj, ndx, time) {
     const speed = .1 + ndx * .1;
@@ -114,6 +110,8 @@ function touchListeners() {
     event.preventDefault();
     clearPickPosition();
     switchGroups(renderObjects, chosenOrbit);
+    camera.cam = chosenOrbit[0].children[0].children[0]
+    infoElem.textContent = 'inner_camera'
   }, {passive: false});
   window.addEventListener('touchstart', (event) => {
     // prevent the window from scrolling
@@ -171,7 +169,8 @@ function switchGroups(from, to) {
   if (pickHelper.pickedObject) {
       from = from.filter((x) => {return !(x[0] === pickHelper.pickedObject.parent)})
       to.push(pickHelper.pickedObject.parent)
-      to = Array.from(new Set(to))
+      const set = new Set(to)
+      to = Array.from(set)
   }
   infoElem.textContent = ''
 }
