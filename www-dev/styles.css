@@ -1,5 +1,14 @@
-html, body { margin: 0; }
-canvas { width: 100%; height: 100%; display: block; }
+html,
+body {
+  margin: 0;
+}
+
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
 #c {
   width: 100vw;
   height: 100vh;
@@ -7,26 +16,29 @@ canvas { width: 100%; height: 100%; display: block; }
   background: url('https://storage.googleapis.com/schau-wien-images/media/schau.png') no-repeat center center;
   background-size: cover;
 }
+
 #info {
-	position: absolute;
-	top: 5px;
-	width: 100%;
-  background: rgba(0,0,0,.8);
+  position: absolute;
+  top: 5px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
   color: white;
-	text-align: right;
-	z-index: 100;
-	display: block;
+  text-align: right;
+  z-index: 100;
+  display: block;
 }
+
 #info-bottom {
-	position: absolute;
-	bottom: 5px;
-	width: 100%;
-  background: rgba(0,0,0,.8);
+  position: absolute;
+  bottom: 5px;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
   color: white;
-	text-align: right;
-	z-index: 100;
-	display: block;
+  text-align: right;
+  z-index: 100;
+  display: block;
 }
+
 #blocker {
   position: absolute;
   top: 0;
@@ -34,6 +46,7 @@ canvas { width: 100%; height: 100%; display: block; }
   bottom: 0;
   right: 0;
 }
+
 #loading {
   position: fixed;
   top: 0;
@@ -44,11 +57,13 @@ canvas { width: 100%; height: 100%; display: block; }
   justify-content: center;
   align-items: center;
 }
+
 #loading .progress {
   margin: 1.5em;
   border: 1px solid white;
   width: 50vw;
 }
+
 #loading .progressbar {
   margin: 2px;
   background: white;
@@ -61,6 +76,7 @@ canvas { width: 100%; height: 100%; display: block; }
   position: absolute;
   z-index: 1;
 }
+
 .home-icon {
   background: url('https://blog.schau-wien.at/wp-content/uploads/2020/04/logo.jpg') 0 0 / 100% auto;
   width: 100px;
@@ -68,20 +84,36 @@ canvas { width: 100%; height: 100%; display: block; }
   top: 1.5rem;
   left: 1.5rem;
 }
+
+.home-icon .tooltiptext {
+  visibility: hidden;
+  width: 100%;
+  height: 100%;
+  background-color: yellow;
+  color: blue;
+  text-align: center;
+  padding: 0px 0;
+  border-radius: 0px;
+}
+
+.home-icon:hover .tooltiptext{
+  visibility: visible;
+}
+
 .other-icon {
   background: url('http://blog.schau-wien.at/wp-content/uploads/2020/04/decasia2.jpg') 0 0 / 100% auto;
-  /* width: 100px; */
   height: 100px;
   top: 1.5rem;
   right: 1.5rem;
 }
+
 .third-icon {
   background: url('http://blog.schau-wien.at/wp-content/uploads/2020/04/decasia1.jpg') 0 0 / 100% auto;
-  /* width: 100px; */
   height: 100px;
   bottom: 1.5rem;
   right: 1.5rem;
 }
+
 .hide-text {
   text-indent: 100%;
   white-space: nowrap;

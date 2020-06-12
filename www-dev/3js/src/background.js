@@ -1,29 +1,39 @@
 import * as THREE from "three";
 // import {GUI} from 'src/third_party/dat-gui.js';
+import { CSS3DRenderer } from 'src/third_party/CSS3DRenderer.js';
 import {OrbitControls} from 'src/js/OrbitControls.js';
+// import { TrackballControls } from 'src/js/TrackballControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, renderer, cameras, cameraPole, scene, gui, makeCamera };
-let canvas, renderer, cameras, cameraPole, scene, controls, gui;
+export { canvas, container, renderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera, controls };
+let canvas, container, renderer, mainCamera, cameras, cameraPole, scene, controls, gui;
 
 // gui = new GUI();
 
 makeBackground();
 function makeBackground() {
 
-  canvas = document.querySelector('#c');
-  renderer = new THREE.WebGLRenderer({canvas, alpha: true});
+  // canvas = document.querySelector('#c');
+  // renderer = new THREE.WebGLRenderer({canvas, alpha: true});
   // renderer.physicallyCorrectLights = true;
 
-  {
-    const camera = makeCamera(80);
-    camera.position.set(0, 0, 25).multiplyScalar(3);
-    camera.lookAt(0, 0, 0);
-    cameras = [];
-    cameras.push({cam: camera, desc: 'main camera'})
-  }
+  container = document.getElementById( 'container' );
 
-  // controls = new OrbitControls(camera, canvas);
+  renderer = new CSS3DRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  container.appendChild( renderer.domElement );
+
+  mainCamera = makeCamera(80);
+  mainCamera.position.set(70, 70, 70).multiplyScalar(3);
+  // mainCamera.position.set(0, 0, 50).multiplyScalar(3);
+  // mainCamera.lookAt(0, 0, 0);
+  cameras = new WeakMap();
+  cameras.set(mainCamera, 'main camera')
+
+  controls = new OrbitControls( mainCamera, renderer.domElement );
+  controls.rotateSpeed = 4;
+
+  // controls = new OrbitControls(mainCamera, canvas);
   // controls.target.set(0, 0, 0);
   // controls.update();
 
@@ -33,15 +43,15 @@ function makeBackground() {
   scene = new THREE.Scene();
   // scene.background = new THREE.Color(0xCCCCCC);
 
-  // // put the camera on a pole (parent it to an object)
-  // // so we can spin the pole to move the camera around the scene
-  // cameraPole = new THREE.Object3D();
-  // scene.add(cameraPole);
-  // cameraPole.add(camera);
+  // put the camera on a pole (parent it to an object)
+  // so we can spin the pole to move the camera around the scene
+  cameraPole = new THREE.Object3D();
+  scene.add(cameraPole);
+  cameraPole.add(mainCamera);
 
   // const gui = new GUI();
-  // gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
-  // const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
+  // gui.add(mainCamera, 'fov', 1, 180).onChange(updateCamera);
+  // const minMaxGUIHelper = new MinMaxGUIHelper(mainCamera, 'near', 'far', 0.1);
   // gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
   // gui.add(minMaxGUIHelper, 'max', 0.1, 1000, 0.1).name('far').onChange(updateCamera);
 
