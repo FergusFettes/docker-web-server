@@ -31,7 +31,7 @@ infoElemBottom.textContent = cameras.get(mainCamera);
 function render(time) {
   time *= 0.001;
 
-  conditionalPickerResizer(time, camera);
+  conditionalPickerResizerController(time, camera);
 
   // renderObjectSet(renderObjects, time);
   cameraPole.rotation.y = time * .1;

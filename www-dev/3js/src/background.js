@@ -2,6 +2,7 @@ import * as THREE from "three";
 // import {GUI} from 'src/third_party/dat-gui.js';
 import { CSS3DRenderer } from 'src/third_party/CSS3DRenderer.js';
 import {OrbitControls} from 'src/js/OrbitControls.js';
+// import { TrackballControls } from 'src/js/TrackballControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
 export { canvas, container, renderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera, controls };
@@ -29,7 +30,10 @@ function makeBackground() {
   cameras.set(mainCamera, 'main camera')
 
 
-  // controls = new OrbitControls(camera, canvas);
+  controls = new OrbitControls( mainCamera, renderer.domElement );
+  controls.rotateSpeed = 4;
+
+  // controls = new OrbitControls(mainCamera, canvas);
   // controls.target.set(0, 0, 0);
   // controls.update();
 
