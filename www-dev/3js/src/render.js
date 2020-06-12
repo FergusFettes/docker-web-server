@@ -126,6 +126,7 @@ function elementListeners() {
     camera = mainCamera;
     infoElemBottom.textContent = cameras.get(mainCamera);
   }, {passive: false});
+  el1.addEventListener('touchmove', () => {infoElem.textContent = ''});
   const el2 = document.querySelector(".other-icon")
   el2.addEventListener("click", stopWandering)
   const el3 = document.querySelector(".third-icon")
