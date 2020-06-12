@@ -41,7 +41,7 @@ function randomCameraCube(material, spread) {
   cube.rotation.set(rand(Math.PI), rand(Math.PI), 0);
   const camera = makeCamera(120)
   cube.add(camera)
-  cameras.set(camera, `${imageMap.get(material)} camera`)
+  cameras.set(camera, `welcome to the cube of ${imageMap.get(material)}`)
   return cube
 }
 

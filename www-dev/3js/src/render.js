@@ -1,4 +1,4 @@
-import { renderer, canvas, cameras, cameraPole, scene } from "src/background.js";
+import { renderer, canvas, cameras, mainCamera, cameraPole, scene } from "src/background.js";
 import { imageMap } from "src/material.js";
 import { PickHelper } from "src/classes.js";
 
@@ -121,10 +121,15 @@ function touchListeners() {
 }
 
 function elementListeners() {
-  const el1 = document.querySelector(".other-icon")
-  el1.addEventListener("click", stopWandering)
-  const el2 = document.querySelector(".third-icon")
+  const el1 = document.querySelector(".home-icon")
+  el1.addEventListener("click", (event) => {
+    camera = mainCamera
+    infoElemBottom.textContent = cameras.get(mainCamera);
+  })
+  const el2 = document.querySelector(".other-icon")
   el2.addEventListener("click", stopWandering)
+  const el3 = document.querySelector(".third-icon")
+  el3.addEventListener("click", stopWandering)
 }
 
 // function stopWandering(event) {
@@ -187,8 +192,6 @@ function goToLink() {
 function changeCamera() {
   if (pickHelper.pickedObject) {
     camera = pickHelper.pickedObject.children[0]
-    cameras.get(pickHelper.pickedObject.children[0])
-    infoElem.textContent = imageMap.get(pickHelper.pickedObject.material);
     infoElemBottom.textContent = cameras.get(pickHelper.pickedObject.children[0]);
   }
 }
