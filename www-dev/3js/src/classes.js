@@ -108,13 +108,13 @@ class PickHelper {
 var CSSElement = function ( id, x, y, z, ry, rx = 0 ) {
 
   var div = document.createElement( 'div' );
-  div.style.width = '480px';
-  div.style.height = '360px';
+  div.style.width = '360px';
+  div.style.height = '240px';
   div.style.backgroundColor = '#000';
 
   var iframe = document.createElement( 'iframe' );
-  iframe.style.width = '480px';
-  iframe.style.height = '360px';
+  iframe.style.width = '100%';
+  iframe.style.height = '100%';
   iframe.style.border = '0px';
   iframe.src = [ 'https://www.youtube.com/embed/', id, '?rel=0' ].join( '' );
   div.appendChild( iframe );
@@ -122,6 +122,7 @@ var CSSElement = function ( id, x, y, z, ry, rx = 0 ) {
   var object = new CSS3DObject( div );
   object.position.set( x, y, z );
   object.rotation.y = ry;
+  object.rotation.x = rx;
 
   return object;
 

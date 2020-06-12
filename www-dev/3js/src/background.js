@@ -24,11 +24,11 @@ function makeBackground() {
   container.appendChild( renderer.domElement );
 
   mainCamera = makeCamera(80);
-  mainCamera.position.set(0, 0, 50).multiplyScalar(3);
-  mainCamera.lookAt(0, 0, 0);
+  mainCamera.position.set( 10, 10, 10 );
+  // mainCamera.position.set(0, 0, 50).multiplyScalar(3);
+  // mainCamera.lookAt(0, 0, 0);
   cameras = new WeakMap();
   cameras.set(mainCamera, 'main camera')
-
 
   controls = new OrbitControls( mainCamera, renderer.domElement );
   controls.rotateSpeed = 4;
