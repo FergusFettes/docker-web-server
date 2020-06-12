@@ -12,7 +12,7 @@ let canvas, container, renderer, mainCamera, cameras, cameraPole, scene, control
 makeBackground();
 function makeBackground() {
 
-  canvas = document.querySelector('#c');
+  // canvas = document.querySelector('#c');
   // renderer = new THREE.WebGLRenderer({canvas, alpha: true});
   // renderer.physicallyCorrectLights = true;
 
