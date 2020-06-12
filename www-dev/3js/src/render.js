@@ -1,4 +1,4 @@
-import { renderer, canvas, cameras, mainCamera, cameraPole, scene } from "src/background.js";
+import { renderer, canvas, cameras, mainCamera, cameraPole, scene, controls } from "src/background.js";
 import { imageMap } from "src/material.js";
 import { PickHelper } from "src/classes.js";
 
@@ -40,7 +40,7 @@ function render(time) {
   requestAnimationFrame(render);
 }
 
-function conditionalPickerResizer(time, camera) {
+function conditionalPickerResizerController(time, camera) {
   if (pickHelper) {
     pickHelper.pick(pickPosition, scene, camera, time);
     showLink();
@@ -49,6 +49,9 @@ function conditionalPickerResizer(time, camera) {
     const canvas = renderer.domElement;
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
     camera.updateProjectionMatrix();
+  }
+  if (controls) {
+    controls.update();
   }
 }
 

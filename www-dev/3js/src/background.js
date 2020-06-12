@@ -1,10 +1,11 @@
 import * as THREE from "three";
 // import {GUI} from 'src/third_party/dat-gui.js';
+import { CSS3DRenderer } from 'src/third_party/CSS3DRenderer.js';
 import {OrbitControls} from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, renderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera };
-let canvas, renderer, mainCamera, cameras, cameraPole, scene, controls, gui;
+export { canvas, container, renderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera, controls };
+let canvas, container, renderer, mainCamera, cameras, cameraPole, scene, controls, gui;
 
 // gui = new GUI();
 
@@ -12,9 +13,14 @@ makeBackground();
 function makeBackground() {
 
   canvas = document.querySelector('#c');
-  renderer = new THREE.WebGLRenderer({canvas, alpha: true});
+  // renderer = new THREE.WebGLRenderer({canvas, alpha: true});
   // renderer.physicallyCorrectLights = true;
 
+  container = document.getElementById( 'container' );
+
+  renderer = new CSS3DRenderer();
+  renderer.setSize( window.innerWidth, window.innerHeight );
+  container.appendChild( renderer.domElement );
 
   mainCamera = makeCamera(80);
   mainCamera.position.set(0, 0, 50).multiplyScalar(3);
