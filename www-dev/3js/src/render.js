@@ -19,25 +19,24 @@ cubeMap = new WeakMap();
 // let rotationNotice = "members on the go";
 
 infoElem = document.querySelector('#info');
-// infoElemBottom = document.querySelector('#info-bottom');
-// infoElemBottom.textContent = rotationNotice;
+infoElemBottom = document.querySelector('#info-bottom');
 
 pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
 clearPickPosition();
 
-const camera = cameras[0]
-infoElem.textContent = camera.desc;
+let camera = mainCamera
+infoElemBottom.textContent = cameras.get(mainCamera);
 
 function render(time) {
   time *= 0.001;
 
-  conditionalPickerResizer(time, camera.cam);
+  conditionalPickerResizer(time, camera);
 
   // renderObjectSet(renderObjects, time);
   cameraPole.rotation.y = time * .1;
 
-  renderer.render(scene, camera.cam);
+  renderer.render(scene, camera);
   requestAnimationFrame(render);
 }
 
@@ -48,11 +47,8 @@ function conditionalPickerResizer(time, camera) {
   }
   if (resizeRendererToDisplaySize(renderer)) {
     const canvas = renderer.domElement;
-    cameras.forEach((cameraInfo) => {
-      const camera = cameraInfo.cam;
-      camera.aspect = canvas.clientWidth / canvas.clientHeight;
-      camera.updateProjectionMatrix();
-    })
+    camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.updateProjectionMatrix();
   }
 }
 
@@ -191,6 +187,8 @@ function goToLink() {
 function changeCamera() {
   if (pickHelper.pickedObject) {
     camera = pickHelper.pickedObject.children[0]
+    cameras.get(pickHelper.pickedObject.children[0])
     infoElem.textContent = imageMap.get(pickHelper.pickedObject.material);
+    infoElemBottom.textContent = cameras.get(pickHelper.pickedObject.children[0]);
   }
 }

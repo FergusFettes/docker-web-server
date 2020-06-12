@@ -3,8 +3,8 @@ import * as THREE from "three";
 import {OrbitControls} from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, renderer, cameras, cameraPole, scene, gui, makeCamera };
-let canvas, renderer, cameras, cameraPole, scene, controls, gui;
+export { canvas, renderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera };
+let canvas, renderer, mainCamera, cameras, cameraPole, scene, controls, gui;
 
 // gui = new GUI();
 
@@ -15,13 +15,13 @@ function makeBackground() {
   renderer = new THREE.WebGLRenderer({canvas, alpha: true});
   // renderer.physicallyCorrectLights = true;
 
-  {
-    const camera = makeCamera(80);
-    camera.position.set(0, 0, 25).multiplyScalar(3);
-    camera.lookAt(0, 0, 0);
-    cameras = [];
-    cameras.push({cam: camera, desc: 'main camera'})
-  }
+
+  mainCamera = makeCamera(80);
+  mainCamera.position.set(0, 0, 50).multiplyScalar(3);
+  mainCamera.lookAt(0, 0, 0);
+  cameras = new WeakMap();
+  cameras.set(mainCamera, 'main camera')
+
 
   // controls = new OrbitControls(camera, canvas);
   // controls.target.set(0, 0, 0);
@@ -37,11 +37,11 @@ function makeBackground() {
   // so we can spin the pole to move the camera around the scene
   cameraPole = new THREE.Object3D();
   scene.add(cameraPole);
-  cameraPole.add(cameras[0].cam);
+  cameraPole.add(mainCamera);
 
   // const gui = new GUI();
-  // gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
-  // const minMaxGUIHelper = new MinMaxGUIHelper(camera, 'near', 'far', 0.1);
+  // gui.add(mainCamera, 'fov', 1, 180).onChange(updateCamera);
+  // const minMaxGUIHelper = new MinMaxGUIHelper(mainCamera, 'near', 'far', 0.1);
   // gui.add(minMaxGUIHelper, 'min', 0.1, 50, 0.1).name('near').onChange(updateCamera);
   // gui.add(minMaxGUIHelper, 'max', 0.1, 1000, 0.1).name('far').onChange(updateCamera);
 

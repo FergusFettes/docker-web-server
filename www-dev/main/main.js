@@ -7,7 +7,7 @@ import { render, touchListeners, elementListeners } from "src/render.js";
 const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
 
-const spread = 100;
+const spread = 80;
 
 makeLights();
 init();
@@ -41,7 +41,7 @@ function randomCameraCube(material, spread) {
   cube.rotation.set(rand(Math.PI), rand(Math.PI), 0);
   const camera = makeCamera(120)
   cube.add(camera)
-  cameras.push({cam: camera, desc: `${imageMap.get(material)} camera`})
+  cameras.set(camera, `${imageMap.get(material)} camera`)
   return cube
 }
 
