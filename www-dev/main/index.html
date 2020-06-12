@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="utf-8">
@@ -7,10 +6,15 @@
 	</head>
 	<body>
     <header>
-    <a href="./" class="floating home-icon hide-text">Schau Wien</a>
+    <div class="floating home-icon">
+      <span class="tooltiptext floating">HOME</span>
+    </div>
+    <a class="floating other-icon hide-text">show_members</a>
+    <a class="floating third-icon hide-text">show_rooms</a>
     </header>
     <canvas id="c"></canvas>
     <div id="info"></div>
+    <div id="info-bottom"></div>
     <div id="loading"><div class="progress"><div class="progressbar"></div></div></div>
 		<script src="./main.js"></script>
 	</body>

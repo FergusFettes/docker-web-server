@@ -20,11 +20,22 @@ loadManager = new THREE.LoadingManager();
 loader = new THREE.TextureLoader(loadManager);
 loader.crossOrigin = '';
 
+// const imageDict = {
+//   "https://storage.googleapis.com/schau-wien-images/media/sope2.jpg": "https://experiments.schau-wien.at/sophie/",
+//   "https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg": "https://experiments.schau-wien.at/kiki/",
+//   "https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg": "https://experiments.schau-wien.at/fergus/",
+//   "https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg": "https://experiments.schau-wien.at/enrique/",
+// }
+
 const imageDict = {
-  "https://storage.googleapis.com/schau-wien-images/media/sope2.jpg": "https://experiments.schau-wien.at/sophie/",
-  "https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg": "https://experiments.schau-wien.at/kiki/",
-  "https://storage.googleapis.com/schau-wien-images/media/sopherfugs.jpg": "https://experiments.schau-wien.at/fergus/",
-  "https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg": "https://experiments.schau-wien.at/enrique/",
+  "https://storage.googleapis.com/schau-wien-images/media/sope2.jpg": "sophie",
+  "https://storage.googleapis.com/schau-wien-images/media/kiki1.jpg": "kiki",
+  "https://storage.googleapis.com/schau-wien-images/media/fergus.jpg": "fergus",
+  "https://storage.googleapis.com/schau-wien-images/media/reeks2.jpg": "enrique",
+  "https://storage.googleapis.com/schau-wien-images/media/alexandru.jpg": "alexandru",
+  "https://storage.googleapis.com/schau-wien-images/media/annar.jpg": "annar",
+  "https://storage.googleapis.com/schau-wien-images/media/luise.jpg": "luise",
+  "https://storage.googleapis.com/schau-wien-images/media/paula.jpg": "paula",
 }
 
 imageMap = new WeakMap();
