@@ -123,26 +123,26 @@ function touchListeners() {
 function elementListeners() {
   const el1 = document.querySelector(".home-icon")
   el1.addEventListener("click", (event) => {
-    camera = mainCamera
+    camera = mainCamera;
     infoElemBottom.textContent = cameras.get(mainCamera);
-  })
+  }, {passive: false});
   const el2 = document.querySelector(".other-icon")
   el2.addEventListener("click", stopWandering)
   const el3 = document.querySelector(".third-icon")
   el3.addEventListener("click", stopWandering)
 }
 
-// function stopWandering(event) {
-//   console.log(event);
-//   if (infoElemBottom.textContent === rotationNotice) {
-//     infoElemBottom.textContent = "";
-//     rotationActive = false;
+function stopWandering(event) {
+  console.log(event);
+  if (infoElemBottom.textContent === rotationNotice) {
+    infoElemBottom.textContent = "";
+    rotationActive = false;
 
-  // } else {
-  //   infoElemBottom.textContent = rotationNotice;
-  //   rotationActive = true;
-  // }
-// }
+  } else {
+    infoElemBottom.textContent = rotationNotice;
+    rotationActive = true;
+  }
+}
 
 function clearPickPosition() {
   pickPosition.x = -100000;

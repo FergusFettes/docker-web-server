@@ -13,6 +13,7 @@ makeLights();
 init();
 requestAnimationFrame(render);
 touchListeners();
+elementListeners();
 function init() {
   loadManager.onLoad = () => {
     loadingElem.style.display = 'none';
@@ -30,7 +31,7 @@ function init() {
 }
 
 function randomCameraCube(material, spread) {
-  const geometry = new THREE.BoxBufferGeometry(rand(10, 15), rand(10, 15), rand(10, 15));
+  const geometry = new THREE.BoxBufferGeometry(14, 14, 14);
   const cube = new THREE.Mesh(geometry, material);
   const point = getPointOnSphere();
   cube.position.set(
