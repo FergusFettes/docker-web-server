@@ -1,29 +1,30 @@
 import * as THREE from "three";
-import { canvas, scene } from "src/background.js";
-import { materials, loadManager } from "src/material.js";
-import { klein } from "src/shapes.js";
+import { canvas, scene, makeCamera, cameras } from "src/background.js";
+import { materials, loadManager, imageMap } from "src/material.js";
 import { makeLights } from "src/lights.js";
-import { render, renderObjects, touchListeners, clearPickPosition } from "src/render.js";
-import { AxisGridHelper } from "src/classes.js";
+import { render, renderObjects, touchListeners, elementListeners } from "src/render.js";
 
 const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
 
-const spread = 15;
+const spread = 100;
 
 makeLights();
 init();
-requestAnimationFrame(render);
 touchListeners();
-clearPickPosition();
+elementListeners();
+requestAnimationFrame(render);
 function init() {
 
   loadManager.onLoad = () => {
     loadingElem.style.display = 'none';
     materials.forEach((material, ndx) => {
-      const geometry = new THREE.IcosahedronBufferGeometry(14);
+      const geometry = new THREE.BoxBufferGeometry(14, 14, 14);
       const cube = new THREE.Mesh(geometry, material);
-      randomOrbit(cube, 1, 0.5);
+      randomOrbit(cube, 1, 0.5, spread);
+      const camera = makeCamera(120)
+      cube.add(camera)
+      cameras.push({cam: camera, desc: `${imageMap.get(material)} camera`})
     });
   };
 
@@ -34,14 +35,14 @@ function init() {
 
 }
 
-function randomOrbit(obj, speed, obj_speed) {
+function randomOrbit(obj, orbit_speed, obj_speed, scale) {
   const orbit = new THREE.Object3D();
   scene.add(orbit);
-  renderObjects.push([orbit, speed]);
+  renderObjects.push([orbit, orbit_speed]);
   const point = getPointOnSphereBehindCamera();
-  obj.position.x = point['x'] * 100
-  obj.position.y = point['y'] * 100
-  obj.position.z = point['z'] * 100
+  obj.position.x = point['x'] * scale
+  obj.position.y = point['y'] * scale
+  obj.position.z = point['z'] * scale
   orbit.add(obj);
   renderObjects.push([obj, obj_speed]);
 }

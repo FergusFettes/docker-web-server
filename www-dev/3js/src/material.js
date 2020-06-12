@@ -31,7 +31,10 @@ imageMap = new WeakMap();
 
 materials = [];
 for (const [key, value] of Object.entries(imageDict)) {
-  const material = new THREE.MeshPhongMaterial({map: loader.load(key)});
+  const material = new THREE.MeshPhongMaterial({
+    map: loader.load(key),
+    side: THREE.DoubleSide,
+  });
   materials.push(material);
   imageMap.set(material, value);
 }

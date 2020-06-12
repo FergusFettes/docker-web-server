@@ -1,4 +1,4 @@
-import { renderer, canvas, camera, cameraPole, scene } from "src/background.js";
+import { renderer, canvas, cameras, cameraPole, scene } from "src/background.js";
 import { imageMap } from "src/material.js";
 import { PickHelper } from "src/classes.js";
 
@@ -7,43 +7,88 @@ export {
   renderObjects,
   resizeRendererToDisplaySize,
   touchListeners,
+  elementListeners,
   cubeMap,
-  clearPickPosition,
 };
-let renderObjects, cubeMap, infoElem, pickHelper, pickPosition;
+let renderObjects, chosenOrbit, cubeMap, rotationActive, rotationNotice, infoElem, infoElemBottom, pickHelper, pickPosition;
 
 renderObjects = [];
+chosenOrbit = [];
 cubeMap = new WeakMap();
+rotationActive = true;
+rotationNotice = "members on the go";
+
 infoElem = document.querySelector('#info');
+infoElemBottom = document.querySelector('#info-bottom');
+infoElemBottom.textContent = rotationNotice;
 
 pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
+clearPickPosition();
+
+const camera = cameras[0]
+infoElem.textContent = camera.desc;
 
 function render(time) {
   time *= 0.001;
 
-  if (resizeRendererToDisplaySize(renderer)) {
-    const canvas = renderer.domElement;
-    camera.aspect = canvas.clientWidth / canvas.clientHeight;
-    camera.updateProjectionMatrix();
-  }
 
-  renderObjects.forEach((obj, ndx) => {
-    const speed = .1 + ndx * .1;
-    const rot = time * obj[1] * speed;
-    obj[0].rotation.x = rot;
-    obj[0].rotation.y = rot;
-  });
+  conditionalPickerResizer(time, camera.cam);
 
+  renderObjectSet(renderObjects, time);
   // cameraPole.rotation.y = time * .1;
 
+  renderer.render(scene, camera.cam);
+  requestAnimationFrame(render);
+}
+
+function conditionalPickerResizer(time, camera) {
   if (pickHelper) {
     pickHelper.pick(pickPosition, scene, camera, time);
     showLink();
   }
+  if (resizeRendererToDisplaySize(renderer)) {
+    const canvas = renderer.domElement;
+    cameras.forEach((cameraInfo) => {
+      const camera = cameraInfo.cam;
+      camera.aspect = canvas.clientWidth / canvas.clientHeight;
+      camera.updateProjectionMatrix();
+    })
+  }
+}
 
-  renderer.render(scene, camera);
-  requestAnimationFrame(render);
+function renderObjectSet(objectSet, time) {
+  if (rotationActive) {
+    objectSet.forEach((obj, ndx) => {
+      simpleRotate(obj, ndx, time);
+    });
+  } else {
+    objectSet.forEach((obj, ndx) => {
+      if (obj[0].type === "Mesh") {
+        simpleRotate(obj, ndx, time);
+      } else {
+        haltingRotate(obj, ndx, time);
+      }
+    });
+  }
+}
+
+
+function simpleRotate(obj, ndx, time) {
+    const speed = .1 + ndx * .1;
+    const rot = time * obj[1] * speed;
+    obj[0].rotation.x = rot;
+    obj[0].rotation.y = rot;
+}
+
+function haltingRotate(obj, ndx, time) {
+  const absoluteRotation = obj[0].rotation.x % ( Math.PI * 2 )
+  if (absoluteRotation > 0.2) {
+    const speed = .1 + ndx * .1;
+    const rot = time * obj[1] * speed;
+    obj[0].rotation.x = rot;
+    obj[0].rotation.y = rot;
+  }
 }
 
 function resizeRendererToDisplaySize(renderer) {
@@ -64,7 +109,9 @@ function touchListeners() {
   window.addEventListener('mouseup', (event) => {
     event.preventDefault();
     clearPickPosition();
-    goToLink();
+    switchGroups(renderObjects, chosenOrbit);
+    camera.cam = chosenOrbit[0].children[0].children[0]
+    infoElem.textContent = 'inner_camera'
   }, {passive: false});
   window.addEventListener('touchstart', (event) => {
     // prevent the window from scrolling
@@ -76,15 +123,30 @@ function touchListeners() {
   });
   window.addEventListener('touchend', (event) => {
     clearPickPosition();
-    goToLink();
+    switchGroups(renderObjects, chosenOrbit);
   }, {passive: false});
 }
 
+function elementListeners() {
+  const el1 = document.querySelector(".other-icon")
+  el1.addEventListener("click", stopWandering)
+  const el2 = document.querySelector(".third-icon")
+  el2.addEventListener("click", stopWandering)
+}
+
+function stopWandering(event) {
+  console.log(event);
+  if (infoElemBottom.textContent === rotationNotice) {
+    infoElemBottom.textContent = "";
+    rotationActive = false;
+
+  } else {
+    infoElemBottom.textContent = rotationNotice;
+    rotationActive = true;
+  }
+}
+
 function clearPickPosition() {
-  // unlike the mouse which always has a position
-  // if the user stops touching the screen we want
-  // to stop picking. For now we just pick a value
-  // unlikely to pick something
   pickPosition.x = -100000;
   pickPosition.y = -100000;
 }
@@ -101,6 +163,16 @@ function getCanvasRelativePosition(event) {
     x: (event.clientX - rect.left) * canvas.width  / rect.width,
     y: (event.clientY - rect.top ) * canvas.height / rect.height,
   };
+}
+
+function switchGroups(from, to) {
+  if (pickHelper.pickedObject) {
+      from = from.filter((x) => {return !(x[0] === pickHelper.pickedObject.parent)})
+      to.push(pickHelper.pickedObject.parent)
+      const set = new Set(to)
+      to = Array.from(set)
+  }
+  infoElem.textContent = ''
 }
 
 function showLink() {
