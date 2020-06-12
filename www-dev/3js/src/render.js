@@ -10,17 +10,17 @@ export {
   elementListeners,
   cubeMap,
 };
-let renderObjects, chosenOrbit, cubeMap, rotationActive, rotationNotice, infoElem, infoElemBottom, pickHelper, pickPosition;
+let renderObjects, chosenOrbit, cubeMap, infoElem, infoElemBottom, pickHelper, pickPosition;
 
-renderObjects = [];
-chosenOrbit = [];
+// renderObjects = [];
+// chosenOrbit = [];
 cubeMap = new WeakMap();
-rotationActive = true;
-rotationNotice = "members on the go";
+// let rotationActive = true;
+// let rotationNotice = "members on the go";
 
 infoElem = document.querySelector('#info');
-infoElemBottom = document.querySelector('#info-bottom');
-infoElemBottom.textContent = rotationNotice;
+// infoElemBottom = document.querySelector('#info-bottom');
+// infoElemBottom.textContent = rotationNotice;
 
 pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
@@ -32,11 +32,10 @@ infoElem.textContent = camera.desc;
 function render(time) {
   time *= 0.001;
 
-
   conditionalPickerResizer(time, camera.cam);
 
-  renderObjectSet(renderObjects, time);
-  // cameraPole.rotation.y = time * .1;
+  // renderObjectSet(renderObjects, time);
+  cameraPole.rotation.y = time * .1;
 
   renderer.render(scene, camera.cam);
   requestAnimationFrame(render);
@@ -57,21 +56,21 @@ function conditionalPickerResizer(time, camera) {
   }
 }
 
-function renderObjectSet(objectSet, time) {
-  if (rotationActive) {
-    objectSet.forEach((obj, ndx) => {
-      simpleRotate(obj, ndx, time);
-    });
-  } else {
-    objectSet.forEach((obj, ndx) => {
-      if (obj[0].type === "Mesh") {
-        simpleRotate(obj, ndx, time);
-      } else {
-        haltingRotate(obj, ndx, time);
-      }
-    });
-  }
-}
+// function renderObjectSet(objectSet, time) {
+//   if (rotationActive) {
+//     objectSet.forEach((obj, ndx) => {
+//       simpleRotate(obj, ndx, time);
+//     });
+//   } else {
+//     objectSet.forEach((obj, ndx) => {
+//       if (obj[0].type === "Mesh") {
+//         simpleRotate(obj, ndx, time);
+//       } else {
+//         haltingRotate(obj, ndx, time);
+//       }
+//     });
+//   }
+// }
 
 
 function simpleRotate(obj, ndx, time) {
@@ -134,17 +133,17 @@ function elementListeners() {
   el2.addEventListener("click", stopWandering)
 }
 
-function stopWandering(event) {
-  console.log(event);
-  if (infoElemBottom.textContent === rotationNotice) {
-    infoElemBottom.textContent = "";
-    rotationActive = false;
+// function stopWandering(event) {
+//   console.log(event);
+//   if (infoElemBottom.textContent === rotationNotice) {
+//     infoElemBottom.textContent = "";
+//     rotationActive = false;
 
-  } else {
-    infoElemBottom.textContent = rotationNotice;
-    rotationActive = true;
-  }
-}
+  // } else {
+  //   infoElemBottom.textContent = rotationNotice;
+  //   rotationActive = true;
+  // }
+// }
 
 function clearPickPosition() {
   pickPosition.x = -100000;

@@ -33,11 +33,11 @@ function makeBackground() {
   scene = new THREE.Scene();
   // scene.background = new THREE.Color(0xCCCCCC);
 
-  // // put the camera on a pole (parent it to an object)
-  // // so we can spin the pole to move the camera around the scene
-  // cameraPole = new THREE.Object3D();
-  // scene.add(cameraPole);
-  // cameraPole.add(camera);
+  // put the camera on a pole (parent it to an object)
+  // so we can spin the pole to move the camera around the scene
+  cameraPole = new THREE.Object3D();
+  scene.add(cameraPole);
+  cameraPole.add(camera);
 
   // const gui = new GUI();
   // gui.add(camera, 'fov', 1, 180).onChange(updateCamera);
