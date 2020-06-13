@@ -199,5 +199,7 @@ function changeCamera() {
   if (pickHelper.pickedObject) {
     camera = pickHelper.pickedObject.children[0]
     infoElemBottom.textContent = cameras.get(pickHelper.pickedObject.children[0]);
+    innerBox = pickHelper.pickedObject.children[1];
+    innerBox.children.forEach((x) => {x.style.display = 'block'});
   }
 }

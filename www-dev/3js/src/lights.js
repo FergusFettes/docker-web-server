@@ -11,6 +11,7 @@ function makeLights () {
     const color = 0xFFFFFF;
     const intensity = 1;
     const light = new THREE.AmbientLight(color, intensity);
+    light.layers.enable(1);
     scene.add(light);
 
     // gui.addColor(new ColorGUIHelper(light, 'color'), 'value').name('color');

@@ -28,7 +28,9 @@ function init() {
     materials.forEach((material, ndx) => {
       const cube = randomCameraCube(material, spread)
       const youcube = createYouCube(0, 0, 0, 5, 0.8, logos, 'image');
+      youcube.children.forEach((x) => {x.style.display = 'none'});
       cube.add(youcube);
+      cube.layers.set(0);
       scene.add(cube);
     });
   };
@@ -51,6 +53,8 @@ function randomCameraCube(material, spread) {
 )
   cube.rotation.set(rand(Math.PI), rand(Math.PI), 0);
   const camera = makeCamera(120)
+  camera.layers.enable(0);
+  camera.layers.enable(1);
   cube.add(camera)
   cameras.set(camera, `welcome to the cube of ${imageMap.get(material)}`)
   return cube
