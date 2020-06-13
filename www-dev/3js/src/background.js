@@ -2,36 +2,31 @@ import * as THREE from "three";
 // import {GUI} from 'src/third_party/dat-gui.js';
 import { CSS3DRenderer } from 'src/third_party/CSS3DRenderer.js';
 import {OrbitControls} from 'src/js/OrbitControls.js';
-// import { TrackballControls } from 'src/js/TrackballControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, container, renderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera, controls };
-let canvas, container, renderer, mainCamera, cameras, cameraPole, scene, controls, gui;
+export { canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, controls, gui, makeCamera, makeCameraControls };
+let canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, controls, gui;
 
 // gui = new GUI();
 
 makeBackground();
 function makeBackground() {
 
-  // canvas = document.querySelector('#c');
-  // renderer = new THREE.WebGLRenderer({canvas, alpha: true});
-  // renderer.physicallyCorrectLights = true;
+  canvas = document.querySelector('#c');
+  renderer = new THREE.WebGLRenderer({canvas, alpha: true});
+  renderer.physicallyCorrectLights = true;
 
   container = document.getElementById( 'container' );
 
-  renderer = new CSS3DRenderer();
-  renderer.setSize( window.innerWidth, window.innerHeight );
-  container.appendChild( renderer.domElement );
+  cssRenderer = new CSS3DRenderer();
+  cssRenderer.setSize( window.innerWidth, window.innerHeight );
+  container.appendChild( cssRenderer.domElement );
 
   mainCamera = makeCamera(80);
-  mainCamera.position.set(70, 70, 70).multiplyScalar(3);
-  // mainCamera.position.set(0, 0, 50).multiplyScalar(3);
-  // mainCamera.lookAt(0, 0, 0);
+  mainCamera.position.set(0, 0, 50).multiplyScalar(3);
+  mainCamera.lookAt(0, 0, 0);
   cameras = new WeakMap();
   cameras.set(mainCamera, 'main camera')
-
-  controls = new OrbitControls( mainCamera, renderer.domElement );
-  controls.rotateSpeed = 4;
 
   // controls = new OrbitControls(mainCamera, canvas);
   // controls.target.set(0, 0, 0);
@@ -66,4 +61,22 @@ function makeCamera(fov = 40) {
   const zNear = 0.1;
   const zFar = 300;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
+}
+
+function makeCameraControls(domElement, fov = 40) {
+  let camera = makeCamera(fov);
+  controls = new OrbitControls( camera, domElement );
+  controls.rotateSpeed = 4;
+  // Block iframe events when dragging camera
+  var blocker = document.getElementById( 'blocker' );
+  blocker.style.display = 'none';
+
+  controls.addEventListener( 'start', function () {
+    blocker.style.display = '';
+  } );
+  controls.addEventListener( 'end', function () {
+    blocker.style.display = 'none';
+  } );
+
+  return {'camera': camera, 'controls': controls};
 }

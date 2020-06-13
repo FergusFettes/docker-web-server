@@ -1,4 +1,4 @@
-import { renderer, canvas, cameras, mainCamera, cameraPole, scene, controls } from "src/background.js";
+import { renderer, cssRenderer, canvas, cameras, mainCamera, cameraPole, scene, controls } from "src/background.js";
 import { imageMap } from "src/material.js";
 import { PickHelper } from "src/classes.js";
 
@@ -12,7 +12,7 @@ export {
 };
 let renderObjects, chosenOrbit, cubeMap, infoElem, infoElemBottom, pickHelper, pickPosition;
 
-// renderObjects = [];
+renderObjects = [];
 // chosenOrbit = [];
 cubeMap = new WeakMap();
 // let rotationActive = true;
@@ -37,6 +37,7 @@ function render(time) {
   cameraPole.rotation.y = time * .1;
 
   renderer.render(scene, camera);
+  cssRenderer.render(scene, camera);
   requestAnimationFrame(render);
 }
 
