@@ -63,7 +63,7 @@ function makeCamera(fov = 40) {
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
 }
 
-function makeCameraControls(domElement, fov = 40) {
+function makeCameraControls(fov = 40, domElement = canvas) {
   let camera = makeCamera(fov);
   controls = new OrbitControls( camera, domElement );
   controls.rotateSpeed = 4;

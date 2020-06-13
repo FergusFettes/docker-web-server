@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { createYouCube } from 'src/youcube.js'
 import { canvas, scene, makeCamera, cameras } from "src/background.js";
 import { materials, loadManager, imageMap } from "src/material.js";
 import { makeLights } from "src/lights.js";
@@ -8,6 +9,13 @@ const loadingElem = document.querySelector('#loading');
 const progressBarElem = loadingElem.querySelector('.progressbar');
 
 const spread = 80;
+
+const logo = 'https://blog.schau-wien.at/wp-content/uploads/2020/04/logo.jpg'
+const logos = []
+for (let i = 0; i < 6; i ++) {
+  logos.push(logo);
+}
+
 
 makeLights();
 init();
@@ -19,6 +27,8 @@ function init() {
     loadingElem.style.display = 'none';
     materials.forEach((material, ndx) => {
       const cube = randomCameraCube(material, spread)
+      const youcube = createYouCube(0, 0, 0, spread * 0.8, 0.8, logos, 'image');
+      cube.add(youcube);
       scene.add(cube);
     });
   };
