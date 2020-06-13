@@ -27,7 +27,7 @@ function init() {
     loadingElem.style.display = 'none';
     materials.forEach((material, ndx) => {
       const cube = randomCameraCube(material, spread)
-      const youcube = createYouCube(0, 0, 0, spread * 0.8, 0.8, logos, 'image');
+      const youcube = createYouCube(0, 0, 0, 5, 0.8, logos, 'image');
       cube.add(youcube);
       scene.add(cube);
     });
