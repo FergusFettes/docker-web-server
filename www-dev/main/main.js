@@ -28,7 +28,6 @@ function init() {
     materials.forEach((material, ndx) => {
       const cube = randomCameraCube(material, spread)
       const youcube = createYouCube(0, 0, 0, 5, 0.8, logos, 'image');
-      youcube.children.forEach((x) => {x.style.display = 'none'});
       cube.add(youcube);
       cube.layers.set(0);
       scene.add(cube);
@@ -41,6 +40,7 @@ function init() {
   };
 
 }
+
 
 function randomCameraCube(material, spread) {
   const geometry = new THREE.BoxBufferGeometry(14, 14, 14);

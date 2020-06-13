@@ -24,6 +24,7 @@ infoElemBottom = document.querySelector('#info-bottom');
 pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
 clearPickPosition();
+makeCssInvisible();
 
 let camera = mainCamera
 infoElemBottom.textContent = cameras.get(mainCamera);
@@ -130,6 +131,7 @@ function elementListeners() {
   el1.addEventListener("click", (event) => {
     camera = mainCamera;
     infoElemBottom.textContent = cameras.get(mainCamera);
+    makeCssInvisible();
   }, {passive: false});
   el1.addEventListener('touchmove', () => {infoElem.textContent = ''});
   const el2 = document.querySelector(".other-icon")
@@ -199,7 +201,16 @@ function changeCamera() {
   if (pickHelper.pickedObject) {
     camera = pickHelper.pickedObject.children[0]
     infoElemBottom.textContent = cameras.get(pickHelper.pickedObject.children[0]);
-    innerBox = pickHelper.pickedObject.children[1];
-    innerBox.children.forEach((x) => {x.style.display = 'block'});
+    makeCssVisible();
   }
+}
+
+function makeCssInvisible() {
+  const element = cssRenderer.domElement;
+  element.children[0].style.display = 'none'
+}
+
+function makeCssVisible() {
+  const element = cssRenderer.domElement;
+  element.children[0].style.display = 'block';
 }
