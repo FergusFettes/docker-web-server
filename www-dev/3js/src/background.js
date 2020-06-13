@@ -14,7 +14,7 @@ function makeBackground() {
 
   canvas = document.querySelector('#c');
   renderer = new THREE.WebGLRenderer({canvas, alpha: true});
-  renderer.physicallyCorrectLights = true;
+  // renderer.physicallyCorrectLights = true;
 
   container = document.getElementById( 'container' );
 

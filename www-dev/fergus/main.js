@@ -27,7 +27,6 @@ function init() {
     logos.push(logo);
   }
 
-
   const cube = createYouCube(0, 0, 0, 40, 0.8, logos, 'image');
   scene.add( cube );
   const cameraControls = makeCameraControls(cssRenderer.domElement);
