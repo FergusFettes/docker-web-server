@@ -8,13 +8,11 @@ export {
   resizeRendererToDisplaySize,
   touchListeners,
   elementListeners,
-  cubeMap,
 };
-let renderObjects, chosenOrbit, cubeMap, infoElem, infoElemBottom, pickHelper, pickPosition;
+let renderObjects, chosenOrbit, infoElem, infoElemBottom, pickHelper, pickPosition;
 
 renderObjects = [];
 // chosenOrbit = [];
-cubeMap = new WeakMap();
 // let rotationActive = true;
 // let rotationNotice = "members on the go";
 
@@ -28,6 +26,7 @@ makeCssInvisible();
 
 let currentCube;
 let camera = mainCamera
+let control = controls.get(mainCamera);
 infoElemBottom.textContent = cameras.get(mainCamera);
 
 function render(time) {
@@ -53,8 +52,8 @@ function conditionalPickerResizerController(time, camera) {
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
     camera.updateProjectionMatrix();
   }
-  if (controls) {
-    controls.update();
+  if (control) {
+    control.update();
   }
 }
 
@@ -134,9 +133,9 @@ function elementListeners() {
     infoElemBottom.textContent = cameras.get(mainCamera);
     makeCssInvisible();
     pickHelper.index = 0;
-    currentCube.material.opacity = 1;
-    currentCube.material.transparent = false;
-    currentCube = '';
+    // currentCube.material.opacity = 1;
+    // currentCube.material.transparent = false;
+    // currentCube = '';
   }, {passive: false});
   el1.addEventListener('touchmove', () => {infoElem.textContent = ''});
   const el2 = document.querySelector(".other-icon")

@@ -4,8 +4,8 @@ import { CSS3DRenderer } from 'src/third_party/CSS3DRenderer.js';
 import {OrbitControls} from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, controls, gui, makeCamera, makeCameraControls };
-let canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, controls, gui;
+export { canvas, container, renderer, cssRenderer, mainCamera, cameras, controls, cameraPole, scene, gui, makeCamera, makeCameraControls };
+let canvas, container, renderer, cssRenderer, mainCamera, cameras, controls, cameraPole, scene, gui;
 
 // gui = new GUI();
 
@@ -30,9 +30,12 @@ function makeBackground() {
   cameras = new WeakMap();
   cameras.set(mainCamera, 'main camera')
 
-  // controls = new OrbitControls(mainCamera, canvas);
-  // controls.target.set(0, 0, 0);
-  // controls.update();
+  let control = new OrbitControls(mainCamera, canvas);
+  control.target.set(0, 0, 0);
+  control.update();
+
+  controls = new WeakMap();
+  controls.set(mainCamera, control);
 
   // renderer.setClearColor(0xAAAAAA);
   // renderer.shadowMap.enabled = true;
@@ -67,18 +70,18 @@ function makeCamera(fov = 40) {
 
 function makeCameraControls(fov = 40, domElement = canvas) {
   let camera = makeCamera(fov);
-  controls = new OrbitControls( camera, domElement );
-  controls.rotateSpeed = 4;
+  let control = new OrbitControls( camera, domElement );
+  control.rotateSpeed = 4;
   // Block iframe events when dragging camera
   var blocker = document.getElementById( 'blocker' );
   blocker.style.display = 'none';
 
-  controls.addEventListener( 'start', function () {
+  control.addEventListener( 'start', function () {
     blocker.style.display = '';
   } );
-  controls.addEventListener( 'end', function () {
+  control.addEventListener( 'end', function () {
     blocker.style.display = 'none';
   } );
 
-  return {'camera': camera, 'controls': controls};
+  return {'camera': camera, 'control': control};
 }

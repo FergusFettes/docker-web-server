@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { createYouCube } from 'src/youcube.js'
-import { canvas, scene, makeCamera, cameras } from "src/background.js";
+import { canvas, scene, makeCamera, cameras, controls } from "src/background.js";
 import { materials, loadManager, imageMap } from "src/material.js";
 import { makeLights } from "src/lights.js";
 import { render, touchListeners, elementListeners } from "src/render.js";
@@ -40,7 +40,6 @@ function init() {
   };
 
 }
-
 
 function randomCameraCube(material, spread) {
   const geometry = new THREE.BoxBufferGeometry(14, 14, 14);
