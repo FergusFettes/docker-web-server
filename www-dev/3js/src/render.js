@@ -134,23 +134,23 @@ function elementListeners() {
     currentCube = '';
   }, {passive: false});
   el1.addEventListener('touchmove', () => {infoElem.textContent = ''});
-  const el2 = document.querySelector(".other-icon")
-  el2.addEventListener("click", stopWandering)
-  const el3 = document.querySelector(".third-icon")
-  el3.addEventListener("click", stopWandering)
+  // const el2 = document.querySelector(".other-icon")
+  // el2.addEventListener("click", stopWandering)
+  // const el3 = document.querySelector(".third-icon")
+  // el3.addEventListener("click", stopWandering)
 }
 
-function stopWandering(event) {
-  console.log(event);
-  if (infoElemBottom.textContent === rotationNotice) {
-    infoElemBottom.textContent = "";
-    rotationActive = false;
+// function stopWandering(event) {
+//   console.log(event);
+//   if (infoElemBottom.textContent === rotationNotice) {
+//     infoElemBottom.textContent = "";
+//     rotationActive = false;
 
-  } else {
-    infoElemBottom.textContent = rotationNotice;
-    rotationActive = true;
-  }
-}
+  // } else {
+  //   infoElemBottom.textContent = rotationNotice;
+  //   rotationActive = true;
+  // }
+// }
 
 function clearPickPosition() {
   pickPosition.x = -100000;
@@ -204,12 +204,14 @@ function changeCamera() {
       currentCube.material.transparent = false;
     }
     currentCube = pickHelper.pickedObject;
-    camera = currentCube.children[0]
-    infoElemBottom.textContent = cameras.get(camera);
-    makeCssVisible();
-    pickHelper.index = 1;
-    currentCube.material.opacity = 0.45;
-    currentCube.material.transparent = true;
+    if (currentCube.children.length > 0) {
+      camera = currentCube.children[0]
+      infoElemBottom.textContent = cameras.get(camera);
+      makeCssVisible();
+      pickHelper.index = 1;
+      currentCube.material.opacity = 0.45;
+      currentCube.material.transparent = true;
+    }
   }
 }
 
