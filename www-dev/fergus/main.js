@@ -1,22 +1,24 @@
 import * as THREE from 'three';
 import { createYouCube } from 'src/youcube.js'
-import { controls, scene } from "src/background.js";
-import { render } from "src/render.js";
+import { controls, cssRenderer, scene, makeCameraControls } from "src/background.js";
+import { render, renderObjects } from "src/render.js";
+import { createMaterial } from "src/material.js";
 
+const spread = 80;
 
 init();
 requestAnimationFrame(render);
 function init() {
 
-  const video = '9xhU3sZrpiU'
-  const videos = []
-  for (let i = 0; i < 6; i ++) {
-    videos.push(video);
-  }
-
-  {
-    const cube = createYouCube(0, 0, 0, 120, 0.8, videos, 'youtube')
-    scene.add( cube );
+  for (let i = 0; i < 5; i++) {
+    const width = 8;
+    const height = 8;
+    const depth = 8;
+    addSolidGeometry(
+      i - 2,
+      i - 2,
+      new THREE.BoxBufferGeometry(width, height, depth),
+      renderObjects);
   }
 
   const logo = 'https://blog.schau-wien.at/wp-content/uploads/2020/04/logo.jpg'
@@ -25,47 +27,32 @@ function init() {
     logos.push(logo);
   }
 
-  {
-    const cube = createYouCube(-90, 0, 0, 120, 0.8, logos, 'image');
-    scene.add( cube );
-  }
+  const cube = createYouCube(0, 0, 0, 40, 0.8, logos, 'image');
+  scene.add( cube );
+  const cameraControls = makeCameraControls(cssRenderer.domElement);
+  cube.add(cameraControls.camera);
 
-  {
-    const cube = createYouCube(90, 0, 0, 120, 0.8, logos, 'image');
-    scene.add( cube );
-  }
 
-  const soundcloud = "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/772342537&color=%23ff5500&auto_play=false&hide_related=false&show_comments=false&show_user=true&show_reposts=false&show_teaser=true&visual=true"
-  const soundclouds = [];
-  for (let i = 0; i < 6; i ++) {
-    soundclouds.push(soundcloud);
-  }
+  // {
+  //   const cube = createYouCube(50, 50, 0, 20, 1, logos, 'image');
+  //   scene.add( cube );
+  // }
 
-  {
-    const cube = createYouCube(0, -90, 0, 120, 0.8, soundclouds, 'soundcloud');
-    scene.add( cube );
-  }
+  // {
+  //   const cube = createYouCube(-50, 70, 200, 140, 0.2, logos, 'image');
+  //   scene.add( cube );
+  // }
+}
 
-  const audio = 'https://storage.googleapis.com/schau-wien-images/media/jarum.mp3'
-  const audios = [];
-  for (let i = 0; i < 6; i ++) {
-    audios.push(audio);
-  }
+function addSolidGeometry(x, y, geometry, collection) {
+  const mesh = new THREE.Mesh(geometry, createMaterial());
+  addObject(x, y, mesh, collection);
+}
 
-  {
-    const cube = createYouCube(0, 90, 0, 120, 0.8, audios, 'audio');
-    scene.add( cube );
-  }
+function addObject(x, y, obj, collection) {
+  obj.position.x = x * spread;
+  obj.position.y = y * spread;
 
-  // Block iframe events when dragging mainCamera
-  var blocker = document.getElementById( 'blocker' );
-  blocker.style.display = 'none';
-
-  controls.addEventListener( 'start', function () {
-    blocker.style.display = '';
-  } );
-  controls.addEventListener( 'end', function () {
-    blocker.style.display = 'none';
-  } );
-
+  scene.add(obj);
+  collection.push(obj);
 }
