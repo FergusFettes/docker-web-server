@@ -132,6 +132,7 @@ function elementListeners() {
     camera = mainCamera;
     infoElemBottom.textContent = cameras.get(mainCamera);
     makeCssInvisible();
+    pickHelper.index = 0;
   }, {passive: false});
   el1.addEventListener('touchmove', () => {infoElem.textContent = ''});
   const el2 = document.querySelector(".other-icon")
@@ -202,6 +203,7 @@ function changeCamera() {
     camera = pickHelper.pickedObject.children[0]
     infoElemBottom.textContent = cameras.get(pickHelper.pickedObject.children[0]);
     makeCssVisible();
+    pickHelper.index = 1;
   }
 }
 
