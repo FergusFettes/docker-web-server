@@ -13,7 +13,7 @@ canvas {
   width: 100vw;
   height: 100vh;
   display: block;
-  background: url('https://storage.googleapis.com/schau-wien-images/media/schau.png') no-repeat center center;
+  background: url('https://storage.googleapis.com/schau-wien-images/media/schau.png') 0 0 / 100% auto;
   background-size: cover;
 }
 

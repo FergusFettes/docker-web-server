@@ -1,4 +1,4 @@
-import { renderer, canvas, cameras, mainCamera, cameraPole, scene, controls } from "src/background.js";
+import { renderer, cssRenderer, canvas, cameras, mainCamera, cameraPole, scene } from "src/background.js";
 import { imageMap } from "src/material.js";
 import { PickHelper } from "src/classes.js";
 
@@ -8,13 +8,11 @@ export {
   resizeRendererToDisplaySize,
   touchListeners,
   elementListeners,
-  cubeMap,
 };
-let renderObjects, chosenOrbit, cubeMap, infoElem, infoElemBottom, pickHelper, pickPosition;
+let renderObjects, chosenOrbit, infoElem, infoElemBottom, pickHelper, pickPosition;
 
-// renderObjects = [];
+renderObjects = [];
 // chosenOrbit = [];
-cubeMap = new WeakMap();
 // let rotationActive = true;
 // let rotationNotice = "members on the go";
 
@@ -24,23 +22,26 @@ infoElemBottom = document.querySelector('#info-bottom');
 pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
 clearPickPosition();
+makeCssInvisible();
 
+let currentCube = '';
 let camera = mainCamera
 infoElemBottom.textContent = cameras.get(mainCamera);
 
 function render(time) {
   time *= 0.001;
 
-  conditionalPickerResizerController(time, camera);
+  conditionalPickerResizer(time, camera);
 
   // renderObjectSet(renderObjects, time);
   cameraPole.rotation.y = time * .1;
 
   renderer.render(scene, camera);
+  cssRenderer.render(scene, camera);
   requestAnimationFrame(render);
 }
 
-function conditionalPickerResizerController(time, camera) {
+function conditionalPickerResizer(time, camera) {
   if (pickHelper) {
     pickHelper.pick(pickPosition, scene, camera, time);
     showLink();
@@ -49,9 +50,6 @@ function conditionalPickerResizerController(time, camera) {
     const canvas = renderer.domElement;
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
     camera.updateProjectionMatrix();
-  }
-  if (controls) {
-    controls.update();
   }
 }
 
@@ -96,6 +94,7 @@ function resizeRendererToDisplaySize(renderer) {
   const needResize = canvas.width !== width || canvas.height !== height;
   if (needResize) {
     renderer.setSize(width, height, false);
+    cssRenderer.setSize(width, height, false);
   }
   return needResize;
 }
@@ -128,6 +127,11 @@ function elementListeners() {
   el1.addEventListener("click", (event) => {
     camera = mainCamera;
     infoElemBottom.textContent = cameras.get(mainCamera);
+    makeCssInvisible();
+    pickHelper.index = 0;
+    currentCube.material.opacity = 1;
+    currentCube.material.transparent = false;
+    currentCube = '';
   }, {passive: false});
   el1.addEventListener('touchmove', () => {infoElem.textContent = ''});
   const el2 = document.querySelector(".other-icon")
@@ -195,7 +199,26 @@ function goToLink() {
 
 function changeCamera() {
   if (pickHelper.pickedObject) {
-    camera = pickHelper.pickedObject.children[0]
-    infoElemBottom.textContent = cameras.get(pickHelper.pickedObject.children[0]);
+    if (currentCube !== '') {
+      currentCube.material.opacity = 1;
+      currentCube.material.transparent = false;
+    }
+    currentCube = pickHelper.pickedObject;
+    camera = currentCube.children[0]
+    infoElemBottom.textContent = cameras.get(camera);
+    makeCssVisible();
+    pickHelper.index = 1;
+    currentCube.material.opacity = 0.45;
+    currentCube.material.transparent = true;
   }
+}
+
+function makeCssInvisible() {
+  const element = cssRenderer.domElement;
+  element.children[0].style.display = 'none'
+}
+
+function makeCssVisible() {
+  const element = cssRenderer.domElement;
+  element.children[0].style.display = 'block';
 }

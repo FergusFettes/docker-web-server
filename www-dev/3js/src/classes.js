@@ -77,10 +77,11 @@ class DegRadHelper {
 }
 
 class PickHelper {
-  constructor() {
+  constructor(index = 0) {
     this.raycaster = new THREE.Raycaster();
     this.pickedObject = null;
     this.pickedObjectSavedColor = 0;
+    this.index = index
   }
   pick(normalizedPosition, scene, camera, time) {
     // restore the color if there is a picked object
@@ -93,9 +94,9 @@ class PickHelper {
     this.raycaster.setFromCamera(normalizedPosition, camera);
     // get the list of objects the ray intersected
     const intersectedObjects = this.raycaster.intersectObjects(scene.children, true);
-    if (intersectedObjects.length) {
+    if (intersectedObjects.length > this.index) {
       // pick the first object. It's the closest one
-      this.pickedObject = intersectedObjects[0].object;
+      this.pickedObject = intersectedObjects[this.index].object;
       // save its color
       this.pickedObjectSavedColor = this.pickedObject.material.emissive.getHex();
       // set its emissive color to flashing red/yellow
