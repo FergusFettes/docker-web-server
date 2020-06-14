@@ -61,6 +61,10 @@ server {
     index index.html;
   }
 
+  location /test8 {
+    index index.html;
+  }
+
   location /fergus {
     index index.html;
   }
