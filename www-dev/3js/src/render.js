@@ -22,9 +22,9 @@ infoElemBottom = document.querySelector('#info-bottom');
 pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
 clearPickPosition();
-// makeCssInvisible();
+makeCssInvisible();
 
-let currentCube;
+let currentCube = '';
 let camera = mainCamera
 infoElemBottom.textContent = cameras.get(mainCamera);
 
@@ -129,9 +129,9 @@ function elementListeners() {
     infoElemBottom.textContent = cameras.get(mainCamera);
     makeCssInvisible();
     pickHelper.index = 0;
-    // currentCube.material.opacity = 1;
-    // currentCube.material.transparent = false;
-    // currentCube = '';
+    currentCube.material.opacity = 1;
+    currentCube.material.transparent = false;
+    currentCube = '';
   }, {passive: false});
   el1.addEventListener('touchmove', () => {infoElem.textContent = ''});
   const el2 = document.querySelector(".other-icon")
@@ -199,6 +199,10 @@ function goToLink() {
 
 function changeCamera() {
   if (pickHelper.pickedObject) {
+    if (currentCube !== '') {
+      currentCube.material.opacity = 1;
+      currentCube.material.transparent = false;
+    }
     currentCube = pickHelper.pickedObject;
     camera = currentCube.children[0]
     infoElemBottom.textContent = cameras.get(camera);
