@@ -26,6 +26,7 @@ pickHelper = new PickHelper();
 clearPickPosition();
 makeCssInvisible();
 
+let currentCube;
 let camera = mainCamera
 infoElemBottom.textContent = cameras.get(mainCamera);
 
@@ -38,7 +39,7 @@ function render(time) {
   cameraPole.rotation.y = time * .1;
 
   renderer.render(scene, camera);
-  cssRenderer.render(scene, camera);
+  // cssRenderer.render(scene, camera);
   requestAnimationFrame(render);
 }
 
@@ -133,6 +134,9 @@ function elementListeners() {
     infoElemBottom.textContent = cameras.get(mainCamera);
     makeCssInvisible();
     pickHelper.index = 0;
+    currentCube.material.opacity = 1;
+    currentCube.material.transparent = false;
+    currentCube = '';
   }, {passive: false});
   el1.addEventListener('touchmove', () => {infoElem.textContent = ''});
   const el2 = document.querySelector(".other-icon")
@@ -200,10 +204,13 @@ function goToLink() {
 
 function changeCamera() {
   if (pickHelper.pickedObject) {
-    camera = pickHelper.pickedObject.children[0]
-    infoElemBottom.textContent = cameras.get(pickHelper.pickedObject.children[0]);
+    currentCube = pickHelper.pickedObject;
+    camera = currentCube.children[0]
+    infoElemBottom.textContent = cameras.get(camera);
     makeCssVisible();
     pickHelper.index = 1;
+    currentCube.material.opacity = 0.45;
+    currentCube.material.transparent = true;
   }
 }
 
