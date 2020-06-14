@@ -29,6 +29,7 @@ function createOrientations (size, polarity = 1) {
     {x: 0, y: -half, z: 0, ry: 0, rx: -Math.PI / 2 * polarity},
     {x: 0, y: half, z: 0, ry: 0, rx: Math.PI / 2 * polarity},
   ];
+  shuffleArray(orientations);
   return orientations
 }
 
@@ -117,3 +118,11 @@ function CSSAudioElement ( id, orientation, size, fill) {
   return object;
 };
 
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        var temp = array[i];
+        array[i] = array[j];
+        array[j] = temp;
+    }
+}

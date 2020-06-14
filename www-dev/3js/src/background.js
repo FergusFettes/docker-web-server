@@ -1,11 +1,11 @@
 import * as THREE from "three";
 // import {GUI} from 'src/third_party/dat-gui.js';
 import { CSS3DRenderer } from 'src/third_party/CSS3DRenderer.js';
-import {OrbitControls} from 'src/js/OrbitControls.js';
+import { OrbitControls } from 'src/js/OrbitControls.js';
 import { MinMaxGUIHelper } from "src/classes.js";
 
-export { canvas, container, renderer, cssRenderer, mainCamera, cameras, controls, cameraPole, scene, gui, makeCamera, makeCameraControls };
-let canvas, container, renderer, cssRenderer, mainCamera, cameras, controls, cameraPole, scene, gui;
+export { canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, gui, makeCamera };
+let canvas, container, renderer, cssRenderer, mainCamera, cameras, cameraPole, scene, gui;
 
 // gui = new GUI();
 
@@ -23,19 +23,16 @@ function makeBackground() {
   container.appendChild( cssRenderer.domElement );
 
   mainCamera = makeCamera(80);
-  mainCamera.position.set(0, 0, 50).multiplyScalar(3);
+  mainCamera.position.set(0, 0, 150).multiplyScalar(5);
   mainCamera.lookAt(0, 0, 0);
   mainCamera.layers.enable(0);
   mainCamera.layers.enable(1);
   cameras = new WeakMap();
   cameras.set(mainCamera, 'main camera')
 
-  let control = new OrbitControls(mainCamera, canvas);
-  control.target.set(0, 0, 0);
-  control.update();
-
-  controls = new WeakMap();
-  controls.set(mainCamera, control);
+  // let control = new OrbitControls(mainCamera, renderer.domElement);
+  // control.target.set(0, 0, 0);
+  // control.update();
 
   // renderer.setClearColor(0xAAAAAA);
   // renderer.shadowMap.enabled = true;
@@ -64,24 +61,24 @@ function makeBackground() {
 function makeCamera(fov = 40) {
   const aspect = window.innerWidth / window.innerHeight;  // the canvas default
   const zNear = 0.1;
-  const zFar = 300;
+  const zFar = 3000;
   return new THREE.PerspectiveCamera(fov, aspect, zNear, zFar);
 }
 
-function makeCameraControls(fov = 40, domElement = canvas) {
-  let camera = makeCamera(fov);
-  let control = new OrbitControls( camera, domElement );
-  control.rotateSpeed = 4;
-  // Block iframe events when dragging camera
-  var blocker = document.getElementById( 'blocker' );
-  blocker.style.display = 'none';
+// function makeCameraControls(fov = 40, domElement = canvas) {
+//   let camera = makeCamera(fov);
+//   let control = new OrbitControls( camera, domElement );
+//   control.rotateSpeed = 4;
+//   // Block iframe events when dragging camera
+//   var blocker = document.getElementById( 'blocker' );
+//   blocker.style.display = 'none';
 
-  control.addEventListener( 'start', function () {
-    blocker.style.display = '';
-  } );
-  control.addEventListener( 'end', function () {
-    blocker.style.display = 'none';
-  } );
+//   control.addEventListener( 'start', function () {
+//     blocker.style.display = '';
+//   } );
+//   control.addEventListener( 'end', function () {
+//     blocker.style.display = 'none';
+//   } );
 
-  return {'camera': camera, 'control': control};
-}
+//   return {'camera': camera, 'control': control};
+// }

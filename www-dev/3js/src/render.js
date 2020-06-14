@@ -1,4 +1,4 @@
-import { renderer, cssRenderer, canvas, cameras, mainCamera, cameraPole, scene, controls } from "src/background.js";
+import { renderer, cssRenderer, canvas, cameras, mainCamera, cameraPole, scene } from "src/background.js";
 import { imageMap } from "src/material.js";
 import { PickHelper } from "src/classes.js";
 
@@ -22,27 +22,26 @@ infoElemBottom = document.querySelector('#info-bottom');
 pickPosition = {x: 0, y: 0};
 pickHelper = new PickHelper();
 clearPickPosition();
-makeCssInvisible();
+// makeCssInvisible();
 
 let currentCube;
 let camera = mainCamera
-let control = controls.get(mainCamera);
 infoElemBottom.textContent = cameras.get(mainCamera);
 
 function render(time) {
   time *= 0.001;
 
-  conditionalPickerResizerController(time, camera);
+  conditionalPickerResizer(time, camera);
 
   // renderObjectSet(renderObjects, time);
   cameraPole.rotation.y = time * .1;
 
   renderer.render(scene, camera);
-  // cssRenderer.render(scene, camera);
+  cssRenderer.render(scene, camera);
   requestAnimationFrame(render);
 }
 
-function conditionalPickerResizerController(time, camera) {
+function conditionalPickerResizer(time, camera) {
   if (pickHelper) {
     pickHelper.pick(pickPosition, scene, camera, time);
     showLink();
@@ -51,9 +50,6 @@ function conditionalPickerResizerController(time, camera) {
     const canvas = renderer.domElement;
     camera.aspect = canvas.clientWidth / canvas.clientHeight;
     camera.updateProjectionMatrix();
-  }
-  if (control) {
-    control.update();
   }
 }
 
