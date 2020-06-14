@@ -37,6 +37,7 @@ parcel build -d prod --no-source-maps $file
 
 if [ $move -eq 1 ]
 then
+  rm -rf $base_dir/$dir
   mkdir $base_dir/$dir -p
   mv prod/main* $base_dir/$dir/main.js
   mv prod/styles* $base_dir/$dir/styles.css
