@@ -1,0 +1,3 @@
+[submodule "www-dev"]
+	path = www-dev
+	url = git@github.com:fergusfettes/javascript-playground
